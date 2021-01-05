@@ -468,5 +468,6 @@ if __name__ == "__main__":
     num_tes = int(sys.argv[7])
     league_type = sys.argv[8] if len(sys.argv) > 8 else None
     randomness = int(sys.argv[9]) if len(sys.argv) > 9 else None
-    picks = generate_picks(pick_index, num_rounds, num_teams)
-    print(ff_viterbi(pick_index, num_rounds, num_teams, num_qbs, num_rbs, num_wrs, num_tes, picks, league_type, randomness))
+    picks = generate_picks(pick_index, num_rounds - 2, num_teams)
+    players = ff_viterbi(pick_index, num_rounds, num_teams, num_qbs, num_rbs, num_wrs, num_tes, picks, league_type, randomness)
+    print([player.name for player in players])

@@ -1,0 +1,76 @@
+;Name;Team;Bye;Age;Pos;PosRank;Points;ADP
+0;Michael Thomas;NO;6;27;WR;WR1;191.8;8.8
+1;Davante Adams;GB;5;27;WR;WR2;197;14.5
+2;Tyreek Hill;KC;10;26;WR;WR3;186.6;17.2
+3;Julio Jones;ATL;10;31;WR;WR4;185.6;19.9
+4;DeAndre Hopkins;ARI;8;28;WR;WR5;180.2;22.5
+5;Chris Godwin;TB;13;24;WR;WR6;176.6;24.7
+6;Kenny Golladay;DET;5;27;WR;WR7;169.6;28.4
+7;Mike Evans;TB;13;27;WR;WR8;185.2;29.2
+8;Adam Thielen;MIN;7;30;WR;WR9;158.6;31.8
+9;Odell Beckham Jr.;CLE;9;28;WR;WR10;153.5;32.8
+10;Amari Cooper;DAL;10;26;WR;WR11;162.5;35
+11;Calvin Ridley;ATL;10;26;WR;WR12;147;37.4
+12;JuJu Smith-Schuster;PIT;4;24;WR;WR13;148;38.4
+13;Allen Robinson II;CHI;11;27;WR;WR14;153.4;40
+14;A.J. Brown;TEN;4;23;WR;WR15;167.2;41.1
+15;Cooper Kupp;LAR;9;27;WR;WR16;155.4;41.5
+16;DK Metcalf;SEA;6;23;WR;WR17;144.8;42.8
+17;D.J. Moore;CAR;13;23;WR;WR18;150.6;45.3
+18;Robert Woods;LAR;9;28;WR;WR19;156.6;46.8
+19;Tyler Lockett;SEA;6;28;WR;WR20;157;49
+20;Terry McLaurin;WAS;8;25;WR;WR21;143.3;52.4
+21;DJ Chark Jr.;JAX;8;24;WR;WR22;136;52.4
+22;Marquise Brown;BAL;7;23;WR;WR23;138.4;57.7
+23;Stefon Diggs;BUF;11;27;WR;WR24;131.7;58.5
+24;T.Y. Hilton;IND;7;31;WR;WR25;154.2;59.2
+25;Keenan Allen;LAC;6;28;WR;WR26;146.5;61.6
+26;Courtland Sutton;DEN;5;25;WR;WR27;152.8;65.7
+27;A.J. Green;CIN;9;32;WR;WR28;146.7;69.4
+28;Michael Gallup;DAL;10;24;WR;WR29;133.3;70.8
+29;Will Fuller V;HOU;8;26;WR;WR30;109.2;72.7
+30;DeVante Parker;MIA;7;27;WR;WR31;131.9;75.1
+31;Brandin Cooks;HOU;8;27;WR;WR32;129.8;80
+32;Deebo Samuel;SF;11;24;WR;WR33;103.2;81.2
+33;Tyler Boyd;CIN;9;26;WR;WR34;131.4;84
+34;Jarvis Landry;CLE;9;28;WR;WR35;118.7;91.1
+35;Julian Edelman;NE;5;34;WR;WR36;112.6;91.7
+36;Marvin Jones Jr.;DET;5;30;WR;WR37;119.5;93.2
+37;CeeDee Lamb;DAL;10;21;WR;WR38;114.4;93.6
+38;Mecole Hardman;KC;10;22;WR;WR39;119.6;95
+39;Diontae Johnson;PIT;4;24;WR;WR40;106.1;100
+40;Henry Ruggs III;LV;6;21;WR;WR41;111.5;103.6
+41;Emmanuel Sanders;NO;6;33;WR;WR42;105.1;105.6
+42;Jerry Jeudy;DEN;5;21;WR;WR43;95.5;110.2
+43;Darius Slayton;NYG;11;23;WR;WR44;110.9;113.3
+44;Sterling Shepard;NYG;11;27;WR;WR45;114.6;114.5
+45;Christian Kirk;ARI;8;24;WR;WR46;103;115
+46;DeSean Jackson;PHI;9;34;WR;WR47;134.6;117.7
+47;Justin Jefferson;MIN;7;21;WR;WR48;84.1;123.6
+48;Preston Williams;MIA;7;23;WR;WR49;109.9;126.8
+49;John Brown;BUF;11;30;WR;WR50;111.5;127.4
+50;Sammy Watkins;KC;10;27;WR;WR51;97.1;127.9
+51;Jamison Crowder;NYJ;10;27;WR;WR52;112.9;133.2
+52;Anthony Miller;CHI;11;26;WR;WR53;100.5;133.7
+53;Jalen Reagor;PHI;9;21;WR;WR54;99.4;141.1
+54;Allen Lazard;GB;5;25;WR;WR55;93.2;145.7
+55;Mike Williams;LAC;6;26;WR;WR56;106.3;150.9
+56;N'Keal Harry;NE;5;23;WR;WR57;103.5;151.9
+57;Bryan Edwards;LV;6;22;WR;WR58;52.2;154.8
+58;Robby Anderson;CAR;13;27;WR;WR59;98.2;159.1
+59;Laviska Shenault Jr;JAX;8;22;WR;WR60;39.1;161
+60;Brandon Aiyuk;SF;11;22;WR;WR61;108.9;162.4
+61;Michael Pittman Jr;IND;7;23;WR;WR62;100.2;163.7
+62;Larry Fitzgerald;ARI;8;37;WR;WR63;86.2;164
+63;Alshon Jeffery;PHI;9;30;WR;WR64;57;164.8
+64;Golden Tate;NYG;11;32;WR;WR65;102.6;166.4
+65;Parris Campbell;IND;7;23;WR;WR66;96.6;167.7
+66;Breshad Perriman;NYJ;10;27;WR;WR67;114.4;174
+67;Curtis Samuel;CAR;13;24;WR;WR68;99.9;175
+68;Dede Westbrook;JAX;8;27;WR;WR69;89;176
+69;James Washington;PIT;4;24;WR;WR70;86.1;177
+70;Hunter Renfrow;LV;6;25;WR;WR71;84.2;178
+71;Chris Conley;JAX;8;28;WR;WR72;81.6;179
+72;Corey Davis;TEN;4;25;WR;WR73;79.3;180
+73;Cole Beasley;BUF;11;31;WR;WR74;79;181
+74;Josh Reynolds;LAR;9;25;WR;WR75;77.4;183
