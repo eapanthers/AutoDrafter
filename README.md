@@ -20,8 +20,6 @@ Clone this repository ($ git clone https://github.com/eapanthers/AutoDrafter.git
  Known issues:
  On rare occasions player names will appear twice. Simply re-run and the problem should go away.
  
- With one specific input (5 14 12 1 5 5 1 ppr 6) an error gets thrown.
- 
  Future improvements:
    - Implement a UI
    - Update live during drafts
