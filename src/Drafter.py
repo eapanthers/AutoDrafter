@@ -5,7 +5,6 @@ import math
 import pandas as pd
 import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installation
 import random
-import sys
 from typing import List
 
 
@@ -97,9 +96,7 @@ def sim_picks(
                         picked_players.append(cur_rb)
                     else:
                         middle_players.append(cur_rb)
-                elif (
-                    row[1][5] == "WR"
-                ):
+                elif row[1][5] == "WR":
                     cur_wr = wr_list.find_player_by_name(row[1][1])[0]
                     prob_picked = 1 - cur_wr.get_prob_available(
                         cur_pick, next_pick, randomness
@@ -167,27 +164,32 @@ def ff_viterbi(
     num_tes_to_draft = num_tes - cur_tes_drafted
 
     states = ["qb", "rb", "wr", "te"]
-    transition_table = {"qb": [
-        max(1 - cur_qbs_drafted / num_qbs, 0),
-        max(1 - cur_qbs_drafted / num_qbs, 0),
-        max(1 - cur_qbs_drafted / num_qbs, 0),
-        max(1 - cur_qbs_drafted / num_qbs, 0),
-    ], "rb": [
-        max(1 - cur_rbs_drafted / num_rbs, 0),
-        max(1 - cur_rbs_drafted / num_rbs, 0),
-        max(1 - cur_rbs_drafted / num_rbs, 0),
-        max(1 - cur_rbs_drafted / num_rbs, 0),
-    ], "wr": [
-        max(1 - cur_wrs_drafted / num_wrs, 0),
-        max(1 - cur_wrs_drafted / num_wrs, 0),
-        max(1 - cur_wrs_drafted / num_wrs, 0),
-        max(1 - cur_wrs_drafted / num_wrs, 0),
-    ], "te": [
-        max(1 - cur_tes_drafted / num_tes, 0),
-        max(1 - cur_tes_drafted / num_tes, 0),
-        max(1 - cur_tes_drafted / num_tes, 0),
-        max(1 - cur_tes_drafted / num_tes, 0),
-    ]}
+    transition_table = {
+        "qb": [
+            max(1 - cur_qbs_drafted / num_qbs, 0),
+            max(1 - cur_qbs_drafted / num_qbs, 0),
+            max(1 - cur_qbs_drafted / num_qbs, 0),
+            max(1 - cur_qbs_drafted / num_qbs, 0),
+        ],
+        "rb": [
+            max(1 - cur_rbs_drafted / num_rbs, 0),
+            max(1 - cur_rbs_drafted / num_rbs, 0),
+            max(1 - cur_rbs_drafted / num_rbs, 0),
+            max(1 - cur_rbs_drafted / num_rbs, 0),
+        ],
+        "wr": [
+            max(1 - cur_wrs_drafted / num_wrs, 0),
+            max(1 - cur_wrs_drafted / num_wrs, 0),
+            max(1 - cur_wrs_drafted / num_wrs, 0),
+            max(1 - cur_wrs_drafted / num_wrs, 0),
+        ],
+        "te": [
+            max(1 - cur_tes_drafted / num_tes, 0),
+            max(1 - cur_tes_drafted / num_tes, 0),
+            max(1 - cur_tes_drafted / num_tes, 0),
+            max(1 - cur_tes_drafted / num_tes, 0),
+        ],
+    }
 
     qb_df = pd.read_csv(f"fantasyCSVs/standard_qb.csv", delimiter=",")
     if league_type.lower() == "standard":
@@ -223,9 +225,7 @@ def ff_viterbi(
         new_player = Player(row[8], row[7], row[1])
         all_tes.add(new_player)
 
-    sequences = {
-        "draft1": picks
-    }  # should be list of pick indices
+    sequences = {"draft1": picks}
     for seq_id in sequences.keys():
         all_picked = []
         sequence = sequences[seq_id]
@@ -253,11 +253,9 @@ def ff_viterbi(
             randomness,
         )
         all_picked = [p.name for p in picked_players]
-        print(all_picked)
+        print(f"The players drafted before your first pick are {all_picked}.")
 
-        for i in range(
-            len(states)
-        ):
+        for i in range(len(states)):
             if states[i] == "qb":
                 v_table[i][0] = math.log(
                     max(
@@ -303,7 +301,7 @@ def ff_viterbi(
                 best_player = get_best_available(all_tes)
                 drafted_players[i][0] = best_player
 
-        print(sequence)
+        print(f"Your picks are: {sequence}.")
         for i in range(1, len(sequence)):
             picked_players = sim_picks(
                 all_qbs,
@@ -371,11 +369,8 @@ def ff_viterbi(
                             probabilities.append(
                                 v_table[state][i - 1]
                                 + math.log(
-                                    max(
-                                        get_best_available(e).proj_points
-                                        - e.find_adp(sequence[i + 1])[0].proj_points,
-                                        0.01,
-                                    )
+                                    get_best_available(e).proj_points
+                                    - e.find_adp(sequence[i + 1])[0].proj_points
                                 )
                                 + math.log(transition_table[states[state]][pos])
                             )
@@ -409,6 +404,7 @@ def ff_viterbi(
                         if player:
                             if player.name == best_player.name:
                                 all_rbs.remove(best_player)
+                    best_player = get_best_available(all_rbs)
                     drafted_players[pos][i] = best_player
                 elif pos == 2:
                     best_player = get_best_available(all_wrs)
@@ -416,6 +412,7 @@ def ff_viterbi(
                         if player:
                             if player.name == best_player.name:
                                 all_wrs.remove(best_player)
+                    best_player = get_best_available(all_wrs)
                     drafted_players[pos][i] = best_player
                 else:
                     best_player = get_best_available(all_tes)
@@ -423,6 +420,7 @@ def ff_viterbi(
                         if player:
                             if player.name == best_player.name:
                                 all_tes.remove(best_player)
+                    best_player = get_best_available(all_tes)
                     drafted_players[pos][i] = best_player
 
         players = []
@@ -445,25 +443,40 @@ def ff_viterbi(
 
 
 if __name__ == "__main__":
-    print(sys.argv)
-    if len(sys.argv) < 8:
-        raise IOError("Not enough arguments. Need at least eight.")
-    pick_index = int(sys.argv[1])
-    num_rounds = int(sys.argv[2])
-    num_teams = int(sys.argv[3])
-    num_qbs = int(sys.argv[4])
-    num_rbs = int(sys.argv[5])
-    num_wrs = int(sys.argv[6])
-    num_tes = int(sys.argv[7])
-    league_type = sys.argv[8] if len(sys.argv) > 8 else None
-    randomness = int(sys.argv[9]) if len(sys.argv) > 9 else None
-    picks = generate_picks(pick_index, num_rounds - 2, num_teams)
-    if league_type and randomness:
-        players = ff_viterbi(num_qbs, num_rbs, num_wrs, num_tes, picks, league_type, randomness)
-    elif league_type:
-        players = ff_viterbi(num_qbs, num_rbs, num_wrs, num_tes, picks, league_type=league_type)
-    elif randomness:
-        players = ff_viterbi(num_qbs, num_rbs, num_wrs, num_tes, picks, randomness=randomness)
-    else:
-        players = ff_viterbi(num_qbs, num_rbs, num_wrs, num_tes, picks)
-    print([player.name for player in players])
+    print("What is your draft slot?")
+    pick_index = int(input())
+    print("How many rounds are in this draft?")
+    num_rounds = int(input())
+    num_rounds -= 2
+    print("How many teams are in this draft?")
+    num_teams = int(input())
+    print(
+        "What weight would you like assigned to drafting a QB? (1 - lowest, recommended)"
+    )
+    num_qbs = int(input())
+    print(
+        f"What weight would you like assigned to drafting a RB? ({math.ceil((num_rounds - 2 - num_qbs) / 2)} - recommended)"
+    )
+    num_rbs = int(input())
+    print(
+        f"What weight would you like assigned to drafting a WR? ({math.floor((num_rounds - 2 - num_qbs) // 2)} - recommended)"
+    )
+    num_wrs = int(input())
+    print(
+        f"What weight would you like assigned to drafting a TE? ({num_rounds - num_qbs - num_wrs - num_rbs} - recommended)"
+    )
+    num_tes = int(input())
+    print("What type of scoring does this league use?")
+    league_type = input()
+    print(
+        "How much randomness should there be when simulating picks? (1 - most random, 10 - least random)"
+    )
+    randomness = int(input())
+    num_qbs = num_qbs - 1 if num_qbs > 1 else 1
+    picks = generate_picks(pick_index, num_rounds, num_teams)
+    players = ff_viterbi(
+        num_qbs, num_rbs, num_wrs, num_tes, picks, league_type, randomness
+    )
+    print(
+        f"Your optimal estimated selections are: {[player.name for player in players]}."
+    )
