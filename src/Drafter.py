@@ -73,7 +73,7 @@ def sim_picks(
                     cur_te = te_list.find_player_by_name(row[1][1])[0]
                     cur_te.picked = True
                     picked_players.append(cur_te)
-            elif cur_pick < row[1][8] < next_pick + math.sqrt(next_pick / 2):
+            elif cur_pick < row[1][8] < next_pick + math.sqrt(next_pick):
                 if row[1][5] == "QB":
                     cur_qb = qb_list.find_player_by_name(row[1][1])[0]
                     prob_picked = 1 - cur_qb.get_prob_available(
