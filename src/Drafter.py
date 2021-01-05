@@ -240,9 +240,6 @@ def ff_viterbi(
         drafted_players = [
             [[None] for i in range(len(sequence))] for i in range(len(states))
         ]
-        best_drafted = [
-            [[None] for i in range(len(sequence))] for i in range(len(states))
-        ]
 
         picked_players = sim_picks(
             all_qbs,
@@ -272,7 +269,6 @@ def ff_viterbi(
                 drafted_table[i][0] = [0]
                 best_player = get_best_available(all_qbs)
                 drafted_players[i][0] = best_player
-                best_drafted[i][0] = 0
             elif states[i] == "rb":
                 v_table[i][0] = math.log(
                     max(
@@ -284,7 +280,6 @@ def ff_viterbi(
                 drafted_table[i][0] = [1]
                 best_player = get_best_available(all_rbs)
                 drafted_players[i][0] = best_player
-                best_drafted[i][0] = 1
             elif states[i] == "wr":
                 v_table[i][0] = math.log(
                     max(
@@ -296,7 +291,6 @@ def ff_viterbi(
                 drafted_table[i][0] = [2]
                 best_player = get_best_available(all_wrs)
                 drafted_players[i][0] = best_player
-                best_drafted[i][0] = 2
             elif states[i] == "te":
                 v_table[i][0] = math.log(
                     max(
@@ -308,7 +302,6 @@ def ff_viterbi(
                 drafted_table[i][0] = [3]
                 best_player = get_best_available(all_tes)
                 drafted_players[i][0] = best_player
-                best_drafted[i][0] = 3
 
         print(sequence)
         for i in range(1, len(sequence)):
@@ -402,7 +395,6 @@ def ff_viterbi(
                 prev_table[pos][i - 1] = max_idx
                 drafted_table[pos][i] = drafted_table[pos][i - 1]
                 drafted_table[pos][i].append(max_idx[0])
-                best_drafted[pos][i] = max_idx[0]
                 if pos == 0:
                     best_player = get_best_available(all_qbs)
                     for player in drafted_players[pos][i]:
