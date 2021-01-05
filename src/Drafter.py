@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installation
 import random
 import sys
+from typing import List
 
 
 def generate_picks(first_pick: int, num_rounds: int, num_teams: int) -> list:
@@ -51,7 +52,7 @@ def sim_picks(
     next_pick: int,
     already_picked: list,
     randomness: float,
-) -> list:
+) -> List[Player]:
     picked_players = [Player(1, 1, name) for name in already_picked]
     middle_players = []
     for row in data.iterrows():
@@ -146,18 +147,14 @@ def sim_picks(
 
 
 def ff_viterbi(
-    pick_index: int,
-    num_teams: int,
-    num_rounds: int,
     num_qbs: int,
     num_rbs: int,
     num_wrs: int,
     num_tes: int,
     picks: list,
     league_type: str = "standard",
-    randomness: int = 5,
-):
-    num_rounds -= 2
+    randomness: int = 10,
+) -> List[Player]:
 
     cur_qbs_drafted = 0
     cur_rbs_drafted = 0
@@ -469,5 +466,12 @@ if __name__ == "__main__":
     league_type = sys.argv[8] if len(sys.argv) > 8 else None
     randomness = int(sys.argv[9]) if len(sys.argv) > 9 else None
     picks = generate_picks(pick_index, num_rounds - 2, num_teams)
-    players = ff_viterbi(pick_index, num_rounds, num_teams, num_qbs, num_rbs, num_wrs, num_tes, picks, league_type, randomness)
+    if league_type and randomness:
+        players = ff_viterbi(num_qbs, num_rbs, num_wrs, num_tes, picks, league_type, randomness)
+    elif league_type:
+        players = ff_viterbi(num_qbs, num_rbs, num_wrs, num_tes, picks, league_type=league_type)
+    elif randomness:
+        players = ff_viterbi(num_qbs, num_rbs, num_wrs, num_tes, picks, randomness=randomness)
+    else:
+        players = ff_viterbi(num_qbs, num_rbs, num_wrs, num_tes, picks)
     print([player.name for player in players])
