@@ -3,8 +3,6 @@ from PlayerList import PlayerList
 
 import csv
 import math
-
-import sys
 import pandas as pd
 import numpy as np
 import random
