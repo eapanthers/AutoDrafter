@@ -2,7 +2,7 @@
 
 A fantasy football drafter which plans an entire draft given certain parameters.
 
-Clone this repository, then install the appropriate python package. Then run python Drafter.py with the following parameters in order:
+Clone this repository, then install the appropriate python packages. Then run python Drafter.py with the following parameters in order:
   - The index of the first pick 
   - The number of rounds in the draft (two will be subtracted to account for kicker and defense picks)
   - The number of teams in the league
@@ -16,3 +16,12 @@ Clone this repository, then install the appropriate python package. Then run pyt
   So a sample appropriate input to run would be $ python Drafter.py 4 14 12 1 5 5 1 ppr 6
  
  Sample datasets containing ADP and player projections from ESPN are included.
+ 
+ Known issues:
+ On rare occasions player names will appear twice. Simply re-run and the problem should go away.
+ 
+ With one specific input (5 14 12 1 5 5 1 ppr 6) an error gets thrown.
+ 
+ Future improvements:
+   - Implement a UI
+   - Update live during drafts
