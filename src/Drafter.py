@@ -5,6 +5,7 @@ import math
 import pandas as pd
 import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installation
 import random
+import sys
 
 
 def generate_picks(first_pick: int, num_rounds: int, num_teams: int) -> list:
@@ -226,7 +227,7 @@ def ff_viterbi(
         all_tes.add(new_player)
 
     sequences = {
-        "draft1": generate_picks(pick_index, num_rounds, num_teams)
+        "draft1": picks
     }  # should be list of pick indices
     for seq_id in sequences.keys():
         all_picked = []
@@ -262,7 +263,7 @@ def ff_viterbi(
 
         for i in range(
             len(states)
-        ):  # intialization, for fantasy use the max proj of each player at the first pick minus the max value of the player guaranteed available at the next owned pick
+        ):
             if states[i] == "qb":
                 v_table[i][0] = math.log(
                     max(
@@ -282,7 +283,7 @@ def ff_viterbi(
                         - all_rbs.find_adp(sequence[1])[0].proj_points,
                         0.01,
                     )
-                )  # get_definite_available(all_rbs, sequence[0]+1, sequence[1]-1, get_best_available(all_rbs)).proj_points
+                )
                 drafted_table[i][0] = [1]
                 best_player = get_best_available(all_rbs)
                 drafted_players[i][0] = best_player
@@ -455,4 +456,17 @@ def ff_viterbi(
 
 
 if __name__ == "__main__":
-    print("here")
+    print(sys.argv)
+    if len(sys.argv) < 8:
+        raise IOError("Not enough arguments. Need at least eight.")
+    pick_index = int(sys.argv[1])
+    num_rounds = int(sys.argv[2])
+    num_teams = int(sys.argv[3])
+    num_qbs = int(sys.argv[4])
+    num_rbs = int(sys.argv[5])
+    num_wrs = int(sys.argv[6])
+    num_tes = int(sys.argv[7])
+    league_type = sys.argv[8] if len(sys.argv) > 8 else None
+    randomness = int(sys.argv[9]) if len(sys.argv) > 9 else None
+    picks = generate_picks(pick_index, num_rounds, num_teams)
+    print(ff_viterbi(pick_index, num_rounds, num_teams, num_qbs, num_rbs, num_wrs, num_tes, picks, league_type, randomness))
