@@ -466,7 +466,7 @@ if __name__ == "__main__":
         f"What weight would you like assigned to drafting a TE? ({num_rounds - num_qbs - num_wrs - num_rbs} - recommended)"
     )
     num_tes = int(input())
-    print("What type of scoring does this league use?")
+    print("What type of scoring does this league use? (Either ppr or standard)")
     league_type = input()
     print(
         "How much randomness should there be when simulating picks? (1 - most random, 10 - least random)"
