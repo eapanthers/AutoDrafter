@@ -425,10 +425,10 @@ def ff_viterbi(
 
         players = []
         max_values = []
-        for state in range(len(v_table)):  # go across the entire table
+        for state in range(len(v_table)):
             max_values.append(
                 v_table[state][len(sequence) - 1]
-            )  # get the values at the end
+            )
         last_state = argmax(max_values)[0]
         players.append(drafted_players[last_state][len(sequence) - 1])
         index = len(sequence) - 2
@@ -445,7 +445,7 @@ def ff_viterbi(
 if __name__ == "__main__":
     print("What is your draft slot?")
     pick_index = int(input())
-    print("How many rounds are in this draft?")
+    print("How many rounds are in this draft? (The last two rounds will be removed to draft a kicker and D/ST)")
     num_rounds = int(input())
     num_rounds -= 2
     print("How many teams are in this draft?")
