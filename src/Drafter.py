@@ -380,13 +380,13 @@ def ff_viterbi(
                                 + math.log(get_best_available(e).proj_points)
                                 + math.log(transition_table[states[state]][pos])
                             )
-                    except ValueError as err:
+                    except ValueError:
                         probabilities.append(
                             -math.inf
-                        )  # probabilities contains the probability of going from pos into state, so index is which state entered
+                        )
 
                 v_table[pos][i] = max(probabilities)
-                max_idx = argmax(probabilities)  # where it should be coming from
+                max_idx = argmax(probabilities)
                 prev_table[pos][i - 1] = max_idx
                 drafted_table[pos][i] = drafted_table[pos][i - 1]
                 drafted_table[pos][i].append(max_idx[0])
