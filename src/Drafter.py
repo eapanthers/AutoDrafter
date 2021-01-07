@@ -310,7 +310,7 @@ def ff_viterbi(
                 all_tes,
                 sorted_df,
                 sequence[i - 1] + 1,
-                sequence[i] - 1,
+                sequence[i],
                 all_picked,
                 randomness,
             )
