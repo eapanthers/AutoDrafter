@@ -2,7 +2,7 @@
 
 A fantasy football drafter which plans an entire draft given certain parameters.
 
-Clone this repository ($ git clone https://github.com/eapanthers/AutoDrafter.git), then install the appropriate python packages. Then run python Drafter.py and answer the following prompts:
+Clone this repository ($ git clone https://github.com/eapanthers/AutoDrafter.git), then install the appropriate python packages. Then run python Drafter.py after navigating to the correct directory and answer the following prompts:
   - The index of the first pick 
   - The number of rounds in the draft (two will be subtracted to account for kicker and defense picks)
   - The number of teams in the league
