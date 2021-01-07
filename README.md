@@ -1,6 +1,6 @@
 # AutoDrafter
 
-A fantasy football drafter which plans an entire draft given certain parameters.
+A fantasy football drafter which plans an entire draft given certain parameters. See https://eaanalytics.blogspot.com/2021/01/building-better-auto-drafter-using-gene.html for more information.
 
 Clone this repository ($ git clone https://github.com/eapanthers/AutoDrafter.git), then install the appropriate python packages. Then run python Drafter.py after navigating to the correct directory and answer the following prompts:
   - The index of the first pick 
