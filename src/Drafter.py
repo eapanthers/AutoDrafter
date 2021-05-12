@@ -7,6 +7,7 @@ import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installati
 import random
 from typing import List
 
+# TODO: Enable inputting a config json for settings
 
 def generate_picks(first_pick: int, num_rounds: int, num_teams: int) -> list:
     all_picks = []
@@ -441,6 +442,9 @@ def ff_viterbi(
         players = players[::-1]
     return players
 
+
+def load_config(path: str) -> bool:
+    
 
 if __name__ == "__main__":
     print("What is your draft slot?")
