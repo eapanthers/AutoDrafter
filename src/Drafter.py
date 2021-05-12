@@ -6,7 +6,7 @@ import math
 import pandas as pd
 import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installation
 import random
-from typing import List
+from typing import List, Tuple
 
 # TODO: Enable inputting a config json for settings
 
@@ -444,16 +444,14 @@ def ff_viterbi(
     return players
 
 
-def load_config(path: str) -> bool:
+def load_config(path: str) -> Tuple[bool, dict]:
     new_str = path.split(".")
     if new_str[len(new_str) - 1] != "json":
-        return False
+        return False, {}
     f = open(path)
     data = json.load(f)
-    for i in data["config"]:
-        print(i)
     f.close()
-    return True
+    return True, data
 
 
 if __name__ == "__main__":
@@ -461,37 +459,41 @@ if __name__ == "__main__":
     config = True if input().lower() == "yes" else False
     print(config)
     if config:
-        if load_config("config.json"):
-            print("done")
-    print("What is your draft slot?")
-    pick_index = int(input())
-    print("How many rounds are in this draft? (The last two rounds will be removed to draft a kicker and D/ST)")
-    num_rounds = int(input())
-    num_rounds -= 2
-    print("How many teams are in this draft?")
-    num_teams = int(input())
-    print(
-        "What weight would you like assigned to drafting a QB? (1 - lowest, recommended)"
-    )
-    num_qbs = int(input())
-    print(
-        f"What weight would you like assigned to drafting a RB? ({math.ceil((num_rounds - 2 - num_qbs) / 2)} - recommended)"
-    )
-    num_rbs = int(input())
-    print(
-        f"What weight would you like assigned to drafting a WR? ({math.floor((num_rounds - 2 - num_qbs) // 2)} - recommended)"
-    )
-    num_wrs = int(input())
-    print(
-        f"What weight would you like assigned to drafting a TE? ({num_rounds - num_qbs - num_wrs - num_rbs} - recommended)"
-    )
-    num_tes = int(input())
-    print("What type of scoring does this league use? (Either ppr or standard)")
-    league_type = input()
-    print(
-        "How much randomness should there be when simulating picks? (1 - most random, 10 - least random)"
-    )
-    randomness = int(input())
+        check = load_config("config.json")
+        data = check[1]
+        if check[0]:
+            for i in data["config"]:
+                print(i)
+    else:
+        print("What is your draft slot?")
+        pick_index = int(input())
+        print("How many rounds are in this draft? (The last two rounds will be removed to draft a kicker and D/ST)")
+        num_rounds = int(input())
+        num_rounds -= 2
+        print("How many teams are in this draft?")
+        num_teams = int(input())
+        print(
+            "What weight would you like assigned to drafting a QB? (1 - lowest, recommended)"
+        )
+        num_qbs = int(input())
+        print(
+            f"What weight would you like assigned to drafting a RB? ({math.ceil((num_rounds - 2 - num_qbs) / 2)} - recommended)"
+        )
+        num_rbs = int(input())
+        print(
+            f"What weight would you like assigned to drafting a WR? ({math.floor((num_rounds - 2 - num_qbs) // 2)} - recommended)"
+        )
+        num_wrs = int(input())
+        print(
+            f"What weight would you like assigned to drafting a TE? ({num_rounds - num_qbs - num_wrs - num_rbs} - recommended)"
+        )
+        num_tes = int(input())
+        print("What type of scoring does this league use? (Either ppr or standard)")
+        league_type = input()
+        print(
+            "How much randomness should there be when simulating picks? (1 - most random, 10 - least random)"
+        )
+        randomness = int(input())
     num_qbs = num_qbs - 1 if num_qbs > 1 else 1
     picks = generate_picks(pick_index, num_rounds, num_teams)
     players = ff_viterbi(
