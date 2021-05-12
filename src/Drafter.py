@@ -8,8 +8,6 @@ import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installati
 import random
 from typing import List, Tuple
 
-# TODO: Enable inputting a config json for settings
-
 def generate_picks(first_pick: int, num_rounds: int, num_teams: int) -> list:
     all_picks = []
     for r in range(num_rounds):
@@ -462,14 +460,24 @@ if __name__ == "__main__":
         check = load_config("config.json")
         data = check[1]
         if check[0]:
-            for i in data["config"]:
-                print(i)
+            print(data["config"])
+            config_info = data["config"][0]
+            pick_index = int(config_info["draft_slot"])
+            num_rounds = int(config_info["num_rounds"])
+            num_teams = int(config_info["num_teams"])
+            num_qbs = int(config_info["qb_weight"])
+            num_rbs = int(config_info["rb_weight"])
+            num_wrs = int(config_info["wr_weight"])
+            num_tes = int(config_info["te_weight"])
+            league_type = config_info["league_type"]
+            randomness = int(config_info["randomness"])
+        else:
+            raise IOError("Error loading from config, check file type is json.")
     else:
         print("What is your draft slot?")
         pick_index = int(input())
         print("How many rounds are in this draft? (The last two rounds will be removed to draft a kicker and D/ST)")
         num_rounds = int(input())
-        num_rounds -= 2
         print("How many teams are in this draft?")
         num_teams = int(input())
         print(
@@ -494,6 +502,7 @@ if __name__ == "__main__":
             "How much randomness should there be when simulating picks? (1 - most random, 10 - least random)"
         )
         randomness = int(input())
+    num_rounds -= 2
     num_qbs = num_qbs - 1 if num_qbs > 1 else 1
     picks = generate_picks(pick_index, num_rounds, num_teams)
     players = ff_viterbi(
