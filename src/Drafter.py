@@ -1,6 +1,7 @@
 from Player import Player
 from PlayerList import PlayerList
 
+import json
 import math
 import pandas as pd
 import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installation
@@ -444,9 +445,24 @@ def ff_viterbi(
 
 
 def load_config(path: str) -> bool:
-    
+    new_str = path.split(".")
+    if new_str[len(new_str) - 1] != "json":
+        return False
+    f = open(path)
+    data = json.load(f)
+    for i in data["config"]:
+        print(i)
+    f.close()
+    return True
+
 
 if __name__ == "__main__":
+    print("Would you like to load from config?")
+    config = True if input().lower() == "yes" else False
+    print(config)
+    if config:
+        if load_config("config.json"):
+            print("done")
     print("What is your draft slot?")
     pick_index = int(input())
     print("How many rounds are in this draft? (The last two rounds will be removed to draft a kicker and D/ST)")

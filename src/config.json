@@ -1,0 +1,10 @@
+{
+	"config": [
+		{
+		"num_teams": "10"
+		},
+		{
+		"num_rounds": "12"
+		}
+	]
+}
