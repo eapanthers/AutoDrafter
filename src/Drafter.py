@@ -10,6 +10,7 @@ from typing import List, Tuple
 
 CONFIG_PATH = "config.json"
 
+
 def generate_picks(first_pick: int, num_rounds: int, num_teams: int) -> list:
     all_picks = []
     for r in range(num_rounds):
