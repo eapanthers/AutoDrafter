@@ -6,7 +6,6 @@ import math
 import pandas as pd
 import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installation
 import random
-import tkinter
 from typing import List, Tuple
 
 CONFIG_PATH = "config.json"

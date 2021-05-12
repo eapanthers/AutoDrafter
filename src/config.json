@@ -1,14 +1,14 @@
 {
 	"config": [
 		{
-		"draft_slot": "2",
+		"draft_slot": "9",
 		"num_rounds": "14",
 		"num_teams": "10",
 		"qb_weight": "1",
-		"rb_weight": "4",
-		"wr_weight": "3",
+		"rb_weight": "6",
+		"wr_weight": "5",
 		"te_weight": "2",
-		"league_type":"standard",
+		"league_type":"ppr",
 		"randomness": "1"
 		}
 	]
