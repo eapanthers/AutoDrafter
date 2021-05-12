@@ -504,7 +504,7 @@ if __name__ == "__main__":
         print("What type of scoring does this league use? (Either ppr or standard)")
         league_type = input()
         print(
-            "How much randomness should there be when simulating picks? (1 - most random, 10 - least random)"
+            "How much randomness should there be when simulating picks? (1 - least random, 10 - most random)"
         )
         randomness = int(input())
 
