@@ -6,6 +6,7 @@ import math
 import pandas as pd
 import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installation
 import random
+import tkinter
 from typing import List, Tuple
 
 CONFIG_PATH = "config.json"
@@ -506,6 +507,8 @@ if __name__ == "__main__":
             "How much randomness should there be when simulating picks? (1 - most random, 10 - least random)"
         )
         randomness = int(input())
+
+    randomness = 11 - (randomness % 11)
     num_rounds -= 2
     num_qbs = num_qbs - 1 if num_qbs > 1 else 1
     picks = generate_picks(pick_index, num_rounds, num_teams)
