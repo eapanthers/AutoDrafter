@@ -8,6 +8,8 @@ import numpy as np  # pip install --upgrade numpy==1.19.3 for correct installati
 import random
 from typing import List, Tuple
 
+CONFIG_PATH = "config.json"
+
 def generate_picks(first_pick: int, num_rounds: int, num_teams: int) -> list:
     all_picks = []
     for r in range(num_rounds):
@@ -455,12 +457,10 @@ def load_config(path: str) -> Tuple[bool, dict]:
 if __name__ == "__main__":
     print("Would you like to load from config?")
     config = True if input().lower() == "yes" else False
-    print(config)
     if config:
-        check = load_config("config.json")
+        check = load_config(CONFIG_PATH)
         data = check[1]
         if check[0]:
-            print(data["config"])
             config_info = data["config"][0]
             pick_index = int(config_info["draft_slot"])
             num_rounds = int(config_info["num_rounds"])
@@ -471,6 +471,9 @@ if __name__ == "__main__":
             num_tes = int(config_info["te_weight"])
             league_type = config_info["league_type"]
             randomness = int(config_info["randomness"])
+            print(f"---- Data loaded from file {CONFIG_PATH} with the following parameters ----")
+            for k, v in config_info.items():
+                print(k, v)
         else:
             raise IOError("Error loading from config, check file type is json.")
     else:
