@@ -1,5 +1,6 @@
 from tkinter import *
-from tkinter import filedialog, ttk
+from tkinter import filedialog
+import Drafter
 
 # TODO: First, display blank menu. User must load csvs and set parameters
 # TODO: Then a run button runs with the included params, displays output as labels
@@ -23,6 +24,8 @@ class Window(Frame):
         self.num_tes = 2
         self.league_type = "standard"
         self.randomness = 1
+        self.config = IntVar()
+        self.conf_info = ""
 
         Frame.__init__(self, master)
         self.master = master
@@ -40,13 +43,13 @@ class Window(Frame):
         csv_menu.add_command(label="Set TE CSV", command=self.set_te_csv)
         file_menu.add_cascade(label="Set CSVs", menu=csv_menu)
 
-        file_menu.add_command(label="Set Config")
+        file_menu.add_command(label="Set Config...", command=self.manage_config)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=root.destroy)
         main_menu.add_cascade(label="File", menu=file_menu)
 
         main_menu.add_command(label="Run")
-        # TODO: Use grid to make more organized
+
         self.qb_label = Label(text="QB CSV:")
         self.qb_label.place(x=0, y=0)
         self.rb_label = Label(text="RB CSV:")
@@ -69,8 +72,31 @@ class Window(Frame):
         self.te_csv_label.place(x=0, y=140)
         self.update_labels()
 
+    def manage_config(self):
+        self.popup = Toplevel(self.master)
+        self.popup.title("Configure")
+        self.popup.geometry(f"{int(WINDOW_X//1.5)}x{int(WINDOW_Y//1.5)}")
+        config_selection = Checkbutton(self.popup, text="Load from config?", variable=self.config, onvalue=1, offvalue=0, command=self.fetch_config)
+        self.config_info_label = Label(self.popup, text="")
+        config_selection.pack()
+        self.config_info_label.pack()
+
+    def fetch_config(self):
+        if self.config.get() == 1:
+            conf_location = filedialog.askopenfilename()
+            check = Drafter.load_config(conf_location)
+            conf_data = check[1]
+            if check[0]:
+                config_info = conf_data["config"][0]
+                self.conf_info = config_info
+                self.update_config_labels()
+
+    def update_config_labels(self):
+        self.config_info_label.configure(text=self.conf_info)
+        self.after(1000, self.update_config_labels)
+
     def update_labels(self):
-        self.qb_csv_label.configure(text=self.qb_csv, underline=True)
+        self.qb_csv_label.configure(text=self.qb_csv)
         self.rb_csv_label.configure(text=self.rb_csv)
         self.wr_csv_label.configure(text=self.wr_csv)
         self.te_csv_label.configure(text=self.te_csv)
