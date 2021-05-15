@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
+from _tkinter import TclError
 import Drafter
 
 # TODO: First, display blank menu. User must load csvs and set parameters
@@ -15,15 +16,15 @@ class Window(Frame):
         self.rb_csv = "None set"
         self.wr_csv = "None set"
         self.te_csv = "None set"
-        self.pick_index = 1
-        self.num_rounds = 14
-        self.num_teams = 10
-        self.num_qbs = 1
-        self.num_rbs = 6
-        self.num_wrs = 5
-        self.num_tes = 2
-        self.league_type = "standard"
-        self.randomness = 1
+        self.pick_index = ""
+        self.num_rounds = ""
+        self.num_teams = ""
+        self.num_qbs = ""
+        self.num_rbs = ""
+        self.num_wrs = ""
+        self.num_tes = ""
+        self.league_type = ""
+        self.randomness = ""
         self.config = IntVar()
         self.conf_info = ""
 
@@ -78,8 +79,26 @@ class Window(Frame):
         self.popup.geometry(f"{int(WINDOW_X//1.5)}x{int(WINDOW_Y//1.5)}")
         config_selection = Checkbutton(self.popup, text="Load from config?", variable=self.config, onvalue=1, offvalue=0, command=self.fetch_config)
         self.config_info_label = Label(self.popup, text="")
+        pick_index_label = Label(self.popup, text="Pick index:")
+        round_label = Label(self.popup, text="Number of rounds: ")
+        self.e1 = Entry(self.popup)
+        self.e2 = Entry(self.popup)
+        done_button = Button(self.popup, text="Done", command=self.submit_config)
+        cancel_button = Button(self.popup, text="Cancel", command=self.popup.destroy)
+
         config_selection.pack()
         self.config_info_label.pack()
+        round_label.pack()
+        self.e2.pack()
+        pick_index_label.pack(side=LEFT)
+        self.e1.pack(side=RIGHT)
+        done_button.pack(side=LEFT)
+        cancel_button.pack(side=RIGHT)
+
+    def submit_config(self):
+        self.pick_index = self.e1.get()
+        self.num_rounds = self.e2.get()
+        self.popup.destroy()
 
     def fetch_config(self):
         if self.config.get() == 1:
@@ -87,13 +106,22 @@ class Window(Frame):
             check = Drafter.load_config(conf_location)
             conf_data = check[1]
             if check[0]:
-                config_info = conf_data["config"][0]
-                self.conf_info = config_info
+                self.conf_info = conf_data["config"][0]
+                self.e1.delete(0, END)
+                self.e1.insert(0, self.conf_info["draft_slot"])
+                self.e2.delete(0, END)
+                self.e2.insert(0, self.conf_info["num_rounds"])
+                self.update_config_labels()
+            else:
+                self.conf_info = "Failed to load config - check file type."
                 self.update_config_labels()
 
     def update_config_labels(self):
-        self.config_info_label.configure(text=self.conf_info)
-        self.after(1000, self.update_config_labels)
+        try:
+            self.config_info_label.configure(text=self.conf_info)
+            self.after(1000, self.update_config_labels)
+        except TclError:
+            pass
 
     def update_labels(self):
         self.qb_csv_label.configure(text=self.qb_csv)
