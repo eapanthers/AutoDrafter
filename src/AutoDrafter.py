@@ -96,11 +96,11 @@ class Window(Frame):
             command=self.fetch_config,
         )
         self.config_info_label = Label(self.popup, text="")
-        pick_index_label = Label(self.popup, text="Pick index:")
+        pick_index_label = Label(self.popup, text="First pick:")
         round_label = Label(self.popup, text="Number of rounds: ")
         teams_label = Label(self.popup, text="Number of teams: ")
         qbs_label = Label(
-            self.popup, text="Weight for QB selection (recommended - 1): "
+            self.popup, text="Weight for QB selection (recommended: 1) "
         )
         self.rbs_label = Label(self.popup, text="Weight for RB selection: ")
         self.wrs_label = Label(self.popup, text="Weight for WR selection: ")
@@ -251,17 +251,17 @@ class Window(Frame):
             )
             try:
                 self.rbs_label.configure(
-                    text=f"Weight for RB selection: (recommended - {math.ceil((int(self.round_var.get()) - 2 - int(self.qb_var.get())) / 2)})",
+                    text=f"Weight for RB selection: (recommended: {math.ceil((int(self.round_var.get()) - 2 - int(self.qb_var.get())) / 2)})",
                     wraplength=POPUP_X,
                     justify=CENTER,
                 )
                 self.wrs_label.configure(
-                    text=f"Weight for WR selection: (recommended - {math.floor((int(self.round_var.get()) - 2 - int(self.qb_var.get())) // 2)})",
+                    text=f"Weight for WR selection: (recommended: {math.floor((int(self.round_var.get()) - 2 - int(self.qb_var.get())) // 2)})",
                     wraplength=POPUP_X,
                     justify=CENTER,
                 )
                 self.tes_label.configure(
-                    text=f"Weight for TE selection: (recommended - {int(self.round_var.get()) - int(self.qb_var.get()) - int(self.wr_var.get()) - int(self.rb_var.get())})",
+                    text=f"Weight for TE selection: (recommended: {int(self.round_var.get()) - int(self.qb_var.get()) - int(self.wr_var.get()) - int(self.rb_var.get())})",
                     wraplength=POPUP_X,
                     justify=CENTER,
                 )
