@@ -4,9 +4,6 @@ from _tkinter import TclError
 import Drafter
 import math
 
-# TODO: First, display blank menu. User must load csvs and set parameters
-# TODO: Then a run button runs with the included params, displays output as labels
-
 WINDOW_X = 500
 WINDOW_Y = 500
 POPUP_X = int(WINDOW_X//1.5)
@@ -58,10 +55,10 @@ class Window(Frame):
         file_menu.add_command(label="Exit", command=root.destroy)
         main_menu.add_cascade(label="File", menu=file_menu)
 
-        main_menu.add_command(label="Run")
+        main_menu.add_command(label="Run", command=self.run)
 
-        self.qb_label = Label(text="QB CSV:")
-        self.qb_label.place(x=0, y=0)
+        self.qb_label = Label(text="QB CSV:")  # TODO: Make viterbi dependent on these inputs
+        self.qb_label.place(x=0, y=0)  # TODO: Add fields to view and modify pick indices
         self.rb_label = Label(text="RB CSV:")
         self.rb_label.place(x=0, y=40)
         self.wr_label = Label(text="WR CSV:")
@@ -91,11 +88,11 @@ class Window(Frame):
         pick_index_label = Label(self.popup, text="Pick index:")
         round_label = Label(self.popup, text="Number of rounds: ")
         teams_label = Label(self.popup, text="Number of teams: ")
-        qbs_label = Label(self.popup, text="Weight for QB selection (1 - recommended): ")
-        self.rbs_label = Label(self.popup, text="Weight for RB selection: ")  # made class variables because they depend on the QB input
+        qbs_label = Label(self.popup, text="Weight for QB selection (recommended - 1): ")
+        self.rbs_label = Label(self.popup, text="Weight for RB selection: ")
         self.wrs_label = Label(self.popup, text="Weight for WR selection: ")
         self.tes_label = Label(self.popup, text="Weight for TE selection: ")
-        league_type = Label(self.popup, text="League type: ")  # make this a checkbox or two buttons?
+        league_type = Label(self.popup, text="League type: ")
         randomness = Label(self.popup, text="Randomness (1 lowest, 10 highest): ")
         self.e1 = Entry(self.popup)
         self.e2 = Entry(self.popup, textvariable=self.round_var)
@@ -139,6 +136,14 @@ class Window(Frame):
         done_button.pack(side=LEFT, padx=POPUP_X / 6)
         cancel_button.pack(side=RIGHT, padx=POPUP_X / 6)
 
+    def run(self):
+        picks = Drafter.generate_picks(int(self.pick_index), int(self.num_rounds), int(self.num_teams))
+        players = Drafter.ff_viterbi(int(self.num_qbs), int(self.num_rbs), int(self.num_wrs), int(self.num_tes), picks, self.league_type, int(self.randomness))
+        if len(players) != len(picks):
+            raise IndexError("Mismatched pick and player amounts.")
+        for idx, pick in enumerate(picks):
+            print(f"Your optimal selection for Round {idx+1}, Pick {pick}: {players[idx].name} (ADP: {players[idx].adp}, Projected Points: {players[idx].proj_points})")
+
     def set_type(self):
         if self.type.get() == 1:
             self.league_type = "ppr"
@@ -158,6 +163,9 @@ class Window(Frame):
         self.rb_var.set(0)
         self.qb_var.set(0)
         self.round_var.set(0)
+        self.randomness = 11 - (int(self.randomness) % 11)
+        self.num_rounds = int(self.num_rounds) - 2
+        self.num_qbs = int(self.num_qbs) - 1 if int(self.num_qbs) > 1 else 1
         self.popup.destroy()
 
     def fetch_config(self):
@@ -220,7 +228,6 @@ class Window(Frame):
             self.after(1000, self.update_config_labels)
         except TclError:
             pass
-
 
     def update_labels(self):
         self.qb_csv_label.configure(text=self.qb_csv)
