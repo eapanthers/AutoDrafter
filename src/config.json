@@ -1,7 +1,7 @@
 {
 	"config": [
 		{
-		"draft_slot": "9",
+		"draft_slot": "[9, 22, 33, 45, 120, 133]",
 		"num_rounds": "14",
 		"num_teams": "10",
 		"qb_weight": "1",

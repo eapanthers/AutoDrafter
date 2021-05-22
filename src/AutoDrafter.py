@@ -23,7 +23,6 @@ class Window(Frame):
         self.num_rbs = ""
         self.num_wrs = ""
         self.num_tes = ""
-        self.league_type = ""
         self.randomness = ""
         self.config = IntVar()
         self.type = IntVar()
@@ -62,7 +61,7 @@ class Window(Frame):
         )  # TODO: Make viterbi dependent on these inputs
         self.qb_label.place(
             x=0, y=0
-        )  # TODO: Add fields to view and modify pick indices
+        )  # TODO: Add live draft feature, list all players from CSV and add checkbox to mark selected. Run viterbi when user pick reached.
         self.rb_label = Label(text="RB CSV:")
         self.rb_label.place(x=0, y=40)
         self.wr_label = Label(text="WR CSV:")
@@ -96,7 +95,7 @@ class Window(Frame):
             command=self.fetch_config,
         )
         self.config_info_label = Label(self.popup, text="")
-        pick_index_label = Label(self.popup, text="First pick:")
+        pick_index_label = Label(self.popup, text="Picks: (Comma separated)")
         round_label = Label(self.popup, text="Number of rounds: ")
         teams_label = Label(self.popup, text="Number of teams: ")
         qbs_label = Label(
@@ -105,7 +104,6 @@ class Window(Frame):
         self.rbs_label = Label(self.popup, text="Weight for RB selection: ")
         self.wrs_label = Label(self.popup, text="Weight for WR selection: ")
         self.tes_label = Label(self.popup, text="Weight for TE selection: ")
-        league_type = Label(self.popup, text="League type: ")
         randomness = Label(self.popup, text="Randomness (1 lowest, 10 highest): ")
         self.e1 = Entry(self.popup)
         self.e2 = Entry(self.popup, textvariable=self.round_var)
@@ -119,13 +117,6 @@ class Window(Frame):
         self.wr_var.trace_add("write", self.update_config_labels)
         self.e7 = Entry(self.popup)
         self.e8 = Entry(self.popup)
-
-        ppr_button = Radiobutton(
-            self.popup, text="PPR", var=self.type, value=1, command=self.set_type
-        )
-        standard_button = Radiobutton(
-            self.popup, text="Standard", var=self.type, value=2, command=self.set_type
-        )
         done_button = Button(self.popup, text="Done", command=self.submit_config)
         cancel_button = Button(self.popup, text="Cancel", command=self.popup.destroy)
 
@@ -145,25 +136,30 @@ class Window(Frame):
         self.e6.pack()
         self.tes_label.pack()
         self.e7.pack()
-        league_type.pack()
-        ppr_button.pack()
-        standard_button.pack()
         randomness.pack()
         self.e8.pack()
         done_button.pack(side=LEFT, padx=POPUP_X / 6)
         cancel_button.pack(side=RIGHT, padx=POPUP_X / 6)
 
     def run(self):
-        picks = Drafter.generate_picks(
-            int(self.pick_index), int(self.num_rounds), int(self.num_teams)
-        )
+        if type(self.pick_index) == str:
+            self.pick_index = self.pick_index.strip('[](){} ').split(',')
+        if len(self.pick_index) > 1:
+            picks = [int(pick) for pick in self.pick_index]
+        else:
+            picks = Drafter.generate_picks(
+                int(self.pick_index), int(self.num_rounds), int(self.num_teams)
+            )
         players = Drafter.ff_viterbi(
             int(self.num_qbs),
             int(self.num_rbs),
             int(self.num_wrs),
             int(self.num_tes),
             picks,
-            self.league_type,
+            self.qb_csv,
+            self.rb_csv,
+            self.wr_csv,
+            self.te_csv,
             int(self.randomness),
         )
         if len(players) != len(picks):
@@ -172,12 +168,6 @@ class Window(Frame):
             print(
                 f"Your optimal selection for Round {idx+1}, Pick {pick}: {players[idx].name} (ADP: {players[idx].adp}, Projected Points: {players[idx].proj_points})"
             )
-
-    def set_type(self):
-        if self.type.get() == 1:
-            self.league_type = "ppr"
-        else:
-            self.league_type = "standard"
 
     def submit_config(self):
         self.pick_index = self.e1.get()
@@ -220,16 +210,6 @@ class Window(Frame):
                     self.e6.insert(0, self.conf_info["wr_weight"])
                     self.e7.delete(0, END)
                     self.e7.insert(0, self.conf_info["te_weight"])
-
-                    self.league_type = self.conf_info["league_type"]
-                    if self.league_type.lower() == "standard":
-                        self.type.set(2)
-                    elif self.league_type.lower() == "ppr":
-                        self.type.set(1)
-                    else:
-                        raise KeyError(
-                            f"League type '{self.league_type}' invalid, should be either ppr or standard"
-                        )
 
                     self.e8.delete(0, END)
                     self.e8.insert(0, self.conf_info["randomness"])

@@ -152,8 +152,11 @@ def ff_viterbi(
     num_wrs: int,
     num_tes: int,
     picks: list,
-    league_type: str = "standard",
-    randomness: int = 10,
+    qb_csv: str,
+    rb_csv: str,
+    wr_csv: str,
+    te_csv: str,
+    randomness: int = 10
 ) -> List[Player]:
 
     cur_qbs_drafted = 0
@@ -194,15 +197,10 @@ def ff_viterbi(
         ],
     }
 
-    qb_df = pd.read_csv(f"fantasyCSVs/standard_qb.csv", delimiter=",")
-    if league_type.lower() == "standard":
-        rb_df = pd.read_csv(f"fantasyCSVs/standard_rb.csv", delimiter=";")
-        wr_df = pd.read_csv(f"fantasyCSVs/standard_wr.csv", delimiter=";")
-        te_df = pd.read_csv(f"fantasyCSVs/standard_te.csv", delimiter=",")
-    else:
-        rb_df = pd.read_csv(f"fantasyCSVs/ppr_rb.csv", delimiter=";")
-        wr_df = pd.read_csv(f"fantasyCSVs/ppr_wr.csv", delimiter=";")
-        te_df = pd.read_csv(f"fantasyCSVs/ppr_te.csv", delimiter=",")
+    qb_df = pd.read_csv(qb_csv, delimiter=",")
+    rb_df = pd.read_csv(rb_csv, delimiter=";")
+    wr_df = pd.read_csv(wr_csv, delimiter=";")
+    te_df = pd.read_csv(te_csv, delimiter=",")
 
     all_df = rb_df
     all_df = all_df.append(qb_df).append(wr_df).append(te_df)
