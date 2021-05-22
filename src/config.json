@@ -8,8 +8,11 @@
 		"rb_weight": "6",
 		"wr_weight": "5",
 		"te_weight": "2",
-		"league_type":"standard",
-		"randomness": "1"
+		"randomness": "1",
+		"qb_csv": "",
+		"rb_csv": "",
+		"wr_csv": "",
+		"te_csv": ""
 		}
 	]
 }

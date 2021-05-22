@@ -55,10 +55,11 @@ class Window(Frame):
         main_menu.add_cascade(label="File", menu=file_menu)
 
         main_menu.add_command(label="Run", command=self.run)
+        main_menu.add_command(label="Live Draft", command=self.live_draft)
 
         self.qb_label = Label(
             text="QB CSV:"
-        )  # TODO: Make viterbi dependent on these inputs
+        )
         self.qb_label.place(
             x=0, y=0
         )  # TODO: Add live draft feature, list all players from CSV and add checkbox to mark selected. Run viterbi when user pick reached.
@@ -164,10 +165,20 @@ class Window(Frame):
         )
         if len(players) != len(picks):
             raise IndexError("Mismatched pick and player amounts.")
-        for idx, pick in enumerate(picks):
-            print(
-                f"Your optimal selection for Round {idx+1}, Pick {pick}: {players[idx].name} (ADP: {players[idx].adp}, Projected Points: {players[idx].proj_points})"
+        self.display_results(picks, players)
+
+    def display_results(self, selections, players):
+        result_popup = Toplevel(self.master)
+        result_popup.title("Draft results")
+        result_popup.geometry(f"{POPUP_X*2}x{int(POPUP_Y*0.5)}")
+        text = Label(result_popup, pady=10, padx=10, wraplength=POPUP_X*2, font=("Arial", 10))
+        output = ""
+        for idx, pick in enumerate(selections):
+            output += (
+                f"Your optimal selection for Round {idx + 1}, Pick {pick}: {players[idx].name} (ADP: {players[idx].adp}, Projected Points: {players[idx].proj_points})\n\n"
             )
+        text.configure(text=output)
+        text.pack()
 
     def submit_config(self):
         self.pick_index = self.e1.get()
@@ -213,6 +224,15 @@ class Window(Frame):
 
                     self.e8.delete(0, END)
                     self.e8.insert(0, self.conf_info["randomness"])
+
+                    if self.conf_info["qb_csv"] != "":
+                        self.qb_csv = self.conf_info["qb_csv"]
+                    if self.conf_info["rb_csv"] != "":
+                        self.qb_csv = self.conf_info["rb_csv"]
+                    if self.conf_info["wr_csv"] != "":
+                        self.qb_csv = self.conf_info["wr_csv"]
+                    if self.conf_info["te_csv"] != "":
+                        self.qb_csv = self.conf_info["te_csv"]
                     self.update_config_labels()
                 except KeyError as e:
                     self.conf_message = (
@@ -250,6 +270,9 @@ class Window(Frame):
             self.after(1000, self.update_config_labels)
         except TclError:
             pass
+
+    def live_draft(self):
+        print("drafting live")
 
     def update_labels(self):
         self.qb_csv_label.configure(text=self.qb_csv)
