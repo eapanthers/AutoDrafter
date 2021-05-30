@@ -5,7 +5,7 @@ A fantasy football drafter which plans an entire draft given certain parameters.
 Open your terminal of choice, clone this repository ($ git clone https://github.com/eapanthers/AutoDrafter.git), and install the appropriate python packages. Then run python Drafter.py after navigating to AutoDrafter/src. It may take a minute to cache for first time use this session. After that, go to File -> Set Config... and choose the configuration file located in the same directory as AutoDrafter, or set your own configuration values. Picks can be either a full list, or if you made no trades just the index of your first pick.
 After setting your config, click Done and go to File -> Set CSVs (unless you set your CSV paths in the config json). Select the sample CSVs in the fantasyCSVs folder in the same directory as AutoDrafter. Once those are all set, you can view the board using the View Board option, or run the simulation.
 
-For common issues, see Troubleshooting.md
+For common issues, see [Troubleshooting.md](https://github.com/eapanthers/AutoDrafter/blob/main/Troubleshooting.md)
  
  Sample datasets containing ADP and player projections from ESPN are included.
  
