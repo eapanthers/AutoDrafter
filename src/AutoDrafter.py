@@ -6,7 +6,6 @@ from tkinter import ttk
 from tkinter import messagebox
 
 import pandas as pd
-import numpy as np
 
 import Drafter
 from PlayerList import PlayerList
