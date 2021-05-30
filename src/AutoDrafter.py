@@ -72,9 +72,7 @@ class Window(Frame):
         main_menu.add_command(label="Run", command=self.run)
         main_menu.add_command(label="View Board", command=self.live_draft)
 
-        self.qb_label = Label(
-            text="QB CSV:"
-        )
+        self.qb_label = Label(text="QB CSV:")
         self.qb_label.place(
             x=0, y=0
         )  # TODO: Add live draft feature, list all players from CSV and add checkbox to mark selected. Run viterbi when user pick reached.
@@ -114,9 +112,7 @@ class Window(Frame):
         pick_index_label = Label(self.popup, text="Picks: (Comma separated)")
         round_label = Label(self.popup, text="Number of rounds: ")
         teams_label = Label(self.popup, text="Number of teams: ")
-        qbs_label = Label(
-            self.popup, text="Weight for QB selection (recommended: 1) "
-        )
+        qbs_label = Label(self.popup, text="Weight for QB selection (recommended: 1) ")
         self.rbs_label = Label(self.popup, text="Weight for RB selection: ")
         self.wrs_label = Label(self.popup, text="Weight for WR selection: ")
         self.tes_label = Label(self.popup, text="Weight for TE selection: ")
@@ -159,7 +155,7 @@ class Window(Frame):
 
     def run(self):
         if type(self.pick_index) == str and len(self.pick_index) > 1:
-            self.pick_index = self.pick_index.strip('[](){} ').split(',')
+            self.pick_index = self.pick_index.strip("[](){} ").split(",")
         if len(self.pick_index) > 1:
             picks = [int(pick) for pick in self.pick_index]
         else:
@@ -189,12 +185,12 @@ class Window(Frame):
             result_popup.geometry(f"{POPUP_X * 2}x{35*self.num_rounds}")
         else:
             result_popup.geometry(f"{POPUP_X * 2}x{35*len(self.pick_index)}")
-        text = Label(result_popup, pady=10, padx=10, wraplength=POPUP_X*2, font=("Arial", 10))
+        text = Label(
+            result_popup, pady=10, padx=10, wraplength=POPUP_X * 2, font=("Arial", 10)
+        )
         output = ""
         for idx, pick in enumerate(selections):
-            output += (
-                f"Your optimal selection for Round {idx + 1}, Pick {pick}: {players[idx].name} (ADP: {players[idx].adp}, Projected Points: {players[idx].proj_points})\n\n"
-            )
+            output += f"Your optimal selection for Round {idx + 1}, Pick {pick}: {players[idx].name} (ADP: {players[idx].adp}, Projected Points: {players[idx].proj_points})\n\n"
         text.configure(text=output)
         text.pack()
 
@@ -316,7 +312,9 @@ class Window(Frame):
         all_df = all_df.append(qb_df).append(wr_df).append(te_df)
         sorted_df = all_df.sort_values(by="ADP")
 
-        self.list_box = ttk.Treeview(all_tab, columns=sorted_df.columns.values, show="headings", height=33)
+        self.list_box = ttk.Treeview(
+            all_tab, columns=sorted_df.columns.values, show="headings", height=33
+        )
         # self.list_box.bind("<Double-1>", self.display_selected)
         width_list = [100, 250, 50, 50, 50, 50, 100, 100, 75]
         sorted_df.columns.values[0] = "Availability"
@@ -329,71 +327,145 @@ class Window(Frame):
             self.list_box.heading(i, text=col)
 
         for i, player in enumerate(sorted_df.values):
-            self.list_box.insert("", END, values=("Available", player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+            self.list_box.insert(
+                "",
+                END,
+                values=(
+                    "Available",
+                    player[1],
+                    player[2],
+                    player[3],
+                    player[4],
+                    player[5],
+                    player[6],
+                    player[7],
+                    player[8],
+                ),
+            )
         self.list_box.grid(row=1, column=0, sticky=NSEW)
         scrollbar = ttk.Scrollbar(all_tab, orient=VERTICAL, command=self.list_box.yview)
         self.list_box.configure(yscroll=scrollbar.set)
-        scrollbar.grid(row=1, column=1, sticky='ns')
+        scrollbar.grid(row=1, column=1, sticky="ns")
 
         # qb tab
 
-        qb_list_box = ttk.Treeview(qb_tab, columns=qb_df.columns.values, show="headings", height=33)
+        qb_list_box = ttk.Treeview(
+            qb_tab, columns=qb_df.columns.values, show="headings", height=33
+        )
         for i, col in enumerate(qb_df.columns.values):
             qb_list_box.column(i, width=width_list[i], anchor=CENTER)
             qb_list_box.heading(i, text=col)
 
         for i, player in enumerate(qb_df.values):
-            qb_list_box.insert("", END, values=("Available",
-            player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+            qb_list_box.insert(
+                "",
+                END,
+                values=(
+                    "Available",
+                    player[1],
+                    player[2],
+                    player[3],
+                    player[4],
+                    player[5],
+                    player[6],
+                    player[7],
+                    player[8],
+                ),
+            )
         qb_list_box.grid(row=1, column=0, sticky=NSEW)
         qb_scrollbar = ttk.Scrollbar(qb_tab, orient=VERTICAL, command=qb_list_box.yview)
         qb_list_box.configure(yscroll=qb_scrollbar.set)
-        qb_scrollbar.grid(row=1, column=1, sticky='ns')
+        qb_scrollbar.grid(row=1, column=1, sticky="ns")
 
         # rb tab
 
-        rb_list_box = ttk.Treeview(rb_tab, columns=rb_df.columns.values, show="headings", height=33)
+        rb_list_box = ttk.Treeview(
+            rb_tab, columns=rb_df.columns.values, show="headings", height=33
+        )
         for i, col in enumerate(rb_df.columns.values):
             rb_list_box.column(i, width=width_list[i], anchor=CENTER)
             rb_list_box.heading(i, text=col)
 
         for i, player in enumerate(rb_df.values):
-            rb_list_box.insert("", END, values=("Available",
-                player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+            rb_list_box.insert(
+                "",
+                END,
+                values=(
+                    "Available",
+                    player[1],
+                    player[2],
+                    player[3],
+                    player[4],
+                    player[5],
+                    player[6],
+                    player[7],
+                    player[8],
+                ),
+            )
         rb_list_box.grid(row=1, column=0, sticky=NSEW)
         rb_scrollbar = ttk.Scrollbar(rb_tab, orient=VERTICAL, command=rb_list_box.yview)
         rb_list_box.configure(yscroll=rb_scrollbar.set)
-        rb_scrollbar.grid(row=1, column=1, sticky='ns')
+        rb_scrollbar.grid(row=1, column=1, sticky="ns")
 
         # wr tab
 
-        wr_list_box = ttk.Treeview(wr_tab, columns=wr_df.columns.values, show="headings", height=33)
+        wr_list_box = ttk.Treeview(
+            wr_tab, columns=wr_df.columns.values, show="headings", height=33
+        )
         for i, col in enumerate(wr_df.columns.values):
             wr_list_box.column(i, width=width_list[i], anchor=CENTER)
             wr_list_box.heading(i, text=col)
 
         for i, player in enumerate(wr_df.values):
-            wr_list_box.insert("", END, values=("Available",
-                player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+            wr_list_box.insert(
+                "",
+                END,
+                values=(
+                    "Available",
+                    player[1],
+                    player[2],
+                    player[3],
+                    player[4],
+                    player[5],
+                    player[6],
+                    player[7],
+                    player[8],
+                ),
+            )
         wr_list_box.grid(row=1, column=0, sticky=NSEW)
         wr_scrollbar = ttk.Scrollbar(wr_tab, orient=VERTICAL, command=wr_list_box.yview)
         wr_list_box.configure(yscroll=wr_scrollbar.set)
-        wr_scrollbar.grid(row=1, column=1, sticky='ns')
+        wr_scrollbar.grid(row=1, column=1, sticky="ns")
 
         # wr tab
 
-        te_list_box = ttk.Treeview(te_tab, columns=te_df.columns.values, show="headings", height=33)
+        te_list_box = ttk.Treeview(
+            te_tab, columns=te_df.columns.values, show="headings", height=33
+        )
         for i, col in enumerate(te_df.columns.values):
             te_list_box.column(i, width=width_list[i], anchor=CENTER)
             te_list_box.heading(i, text=col)
 
         for i, player in enumerate(te_df.values):
-            te_list_box.insert("", END, values=("Available",
-                player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+            te_list_box.insert(
+                "",
+                END,
+                values=(
+                    "Available",
+                    player[1],
+                    player[2],
+                    player[3],
+                    player[4],
+                    player[5],
+                    player[6],
+                    player[7],
+                    player[8],
+                ),
+            )
         te_list_box.grid(row=1, column=0, sticky=NSEW)
         te_scrollbar = ttk.Scrollbar(te_tab, orient=VERTICAL, command=te_list_box.yview)
         te_list_box.configure(yscroll=te_scrollbar.set)
-        te_scrollbar.grid(row=1, column=1, sticky='ns')
+        te_scrollbar.grid(row=1, column=1, sticky="ns")
 
         all_list = self.get_players(all_df)
         qb_list = self.get_players(qb_df)
@@ -423,12 +495,17 @@ class Window(Frame):
 
     def display_selected(self, event):
         for selected in self.list_box.selection():
-            player_name = self.list_box.item(selected)['values'][1]
+            player_name = self.list_box.item(selected)["values"][1]
             if not self.all[player_name].picked:
-                messagebox.showinfo(title='Player selected', message=f"{player_name} marked as selected")
+                messagebox.showinfo(
+                    title="Player selected", message=f"{player_name} marked as selected"
+                )
                 self.all[player_name].picked = True
             else:
-                messagebox.showinfo(title='Player unselected', message=f"{player_name} marked as available")
+                messagebox.showinfo(
+                    title="Player unselected",
+                    message=f"{player_name} marked as available",
+                )
                 self.all[player_name].picked = False
 
     def update_labels(self):
