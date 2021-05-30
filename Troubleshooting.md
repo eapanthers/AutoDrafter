@@ -1,6 +1,6 @@
 # Troubleshooting Installation
 
-When installing, you may run into one of the following issues:
+When installing, you may run into some of the following issues:
 
 ## Invalid Syntax when running python AutoDrafter.py
 
