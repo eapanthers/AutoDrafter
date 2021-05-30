@@ -10,7 +10,7 @@ For common issues, see [Troubleshooting.md](https://github.com/eapanthers/AutoDr
  Sample datasets containing ADP and player projections from ESPN are included.
  
  Known issues:
- On rare occasions player names will appear twice. Simply re-run and the problem should go away.
+ On rare occasions player names will appear twice. Simply re-run and the problem should go away. If the issue persists, verify your player weights sum to the number of rounds.
  Running on some instances of macOS will cause some menus not to display. Buttons included in that case.
  
  Future improvements:
