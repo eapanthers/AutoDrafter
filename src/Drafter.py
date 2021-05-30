@@ -164,11 +164,6 @@ def ff_viterbi(
     cur_wrs_drafted = 0
     cur_tes_drafted = 0
 
-    num_qbs_to_draft = num_qbs - cur_qbs_drafted
-    num_rbs_to_draft = num_rbs - cur_rbs_drafted
-    num_wrs_to_draft = num_wrs - cur_wrs_drafted
-    num_tes_to_draft = num_tes - cur_tes_drafted
-
     states = ["qb", "rb", "wr", "te"]
     transition_table = {
         "qb": [

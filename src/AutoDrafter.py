@@ -1,13 +1,23 @@
+import math
+from _tkinter import TclError
 from tkinter import *
 from tkinter import filedialog
-from _tkinter import TclError
+from tkinter import ttk
+from tkinter import messagebox
+
+import pandas as pd
+import numpy as np
+
 import Drafter
-import math
+from PlayerList import PlayerList
+from Player import Player
 
 WINDOW_X = 500
 WINDOW_Y = 500
 POPUP_X = int(WINDOW_X // 1.5)
 POPUP_Y = int(WINDOW_Y // 1)
+LIVE_DRAFT_X = 1000
+LIVE_DRAFT_Y = 750
 
 
 class Window(Frame):
@@ -32,6 +42,11 @@ class Window(Frame):
         self.round_var = IntVar()
         self.conf_info = ""
         self.conf_message = ""
+        self.qbs = {}
+        self.rbs = {}
+        self.wrs = {}
+        self.tes = {}
+        self.all = {}
 
         Frame.__init__(self, master)
         self.master = master
@@ -55,7 +70,7 @@ class Window(Frame):
         main_menu.add_cascade(label="File", menu=file_menu)
 
         main_menu.add_command(label="Run", command=self.run)
-        main_menu.add_command(label="Live Draft", command=self.live_draft)
+        main_menu.add_command(label="View Board", command=self.live_draft)
 
         self.qb_label = Label(
             text="QB CSV:"
@@ -143,7 +158,7 @@ class Window(Frame):
         cancel_button.pack(side=RIGHT, padx=POPUP_X / 6)
 
     def run(self):
-        if type(self.pick_index) == str:
+        if type(self.pick_index) == str and len(self.pick_index) > 1:
             self.pick_index = self.pick_index.strip('[](){} ').split(',')
         if len(self.pick_index) > 1:
             picks = [int(pick) for pick in self.pick_index]
@@ -170,7 +185,10 @@ class Window(Frame):
     def display_results(self, selections, players):
         result_popup = Toplevel(self.master)
         result_popup.title("Draft results")
-        result_popup.geometry(f"{POPUP_X*2}x{int(POPUP_Y*0.5)}")
+        if len(self.pick_index) == 1:
+            result_popup.geometry(f"{POPUP_X * 2}x{35*self.num_rounds}")
+        else:
+            result_popup.geometry(f"{POPUP_X * 2}x{35*len(self.pick_index)}")
         text = Label(result_popup, pady=10, padx=10, wraplength=POPUP_X*2, font=("Arial", 10))
         output = ""
         for idx, pick in enumerate(selections):
@@ -228,11 +246,11 @@ class Window(Frame):
                     if self.conf_info["qb_csv"] != "":
                         self.qb_csv = self.conf_info["qb_csv"]
                     if self.conf_info["rb_csv"] != "":
-                        self.qb_csv = self.conf_info["rb_csv"]
+                        self.rb_csv = self.conf_info["rb_csv"]
                     if self.conf_info["wr_csv"] != "":
-                        self.qb_csv = self.conf_info["wr_csv"]
+                        self.wr_csv = self.conf_info["wr_csv"]
                     if self.conf_info["te_csv"] != "":
-                        self.qb_csv = self.conf_info["te_csv"]
+                        self.te_csv = self.conf_info["te_csv"]
                     self.update_config_labels()
                 except KeyError as e:
                     self.conf_message = (
@@ -272,7 +290,146 @@ class Window(Frame):
             pass
 
     def live_draft(self):
-        print("drafting live")
+        draft_window = Toplevel(self.master)
+        draft_window.title("Live Draft")
+        draft_window.geometry(f"{LIVE_DRAFT_X}x{LIVE_DRAFT_Y}")
+        tab_control = ttk.Notebook(draft_window)
+        all_tab = Frame(tab_control)
+        qb_tab = ttk.Frame(tab_control)
+        rb_tab = ttk.Frame(tab_control)
+        wr_tab = ttk.Frame(tab_control)
+        te_tab = ttk.Frame(tab_control)
+
+        tab_control.add(all_tab, text="All")
+        tab_control.add(qb_tab, text="QB List")
+        tab_control.add(rb_tab, text="RB List")
+        tab_control.add(wr_tab, text="WR List")
+        tab_control.add(te_tab, text="TE List")
+        tab_control.pack(expand=1, fill="both")
+
+        qb_df = pd.read_csv(self.qb_csv, delimiter=",")
+        rb_df = pd.read_csv(self.rb_csv, delimiter=";")
+        wr_df = pd.read_csv(self.wr_csv, delimiter=";")
+        te_df = pd.read_csv(self.te_csv, delimiter=",")
+
+        all_df = rb_df
+        all_df = all_df.append(qb_df).append(wr_df).append(te_df)
+        sorted_df = all_df.sort_values(by="ADP")
+
+        self.list_box = ttk.Treeview(all_tab, columns=sorted_df.columns.values, show="headings", height=33)
+        # self.list_box.bind("<Double-1>", self.display_selected)
+        width_list = [100, 250, 50, 50, 50, 50, 100, 100, 75]
+        sorted_df.columns.values[0] = "Availability"
+        qb_df.columns.values[0] = "Availability"
+        rb_df.columns.values[0] = "Availability"
+        wr_df.columns.values[0] = "Availability"
+        te_df.columns.values[0] = "Availability"
+        for i, col in enumerate(sorted_df.columns.values):
+            self.list_box.column(i, width=width_list[i], anchor=CENTER)
+            self.list_box.heading(i, text=col)
+
+        for i, player in enumerate(sorted_df.values):
+            self.list_box.insert("", END, values=("Available", player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+        self.list_box.grid(row=1, column=0, sticky=NSEW)
+        scrollbar = ttk.Scrollbar(all_tab, orient=VERTICAL, command=self.list_box.yview)
+        self.list_box.configure(yscroll=scrollbar.set)
+        scrollbar.grid(row=1, column=1, sticky='ns')
+
+        # qb tab
+
+        qb_list_box = ttk.Treeview(qb_tab, columns=qb_df.columns.values, show="headings", height=33)
+        for i, col in enumerate(qb_df.columns.values):
+            qb_list_box.column(i, width=width_list[i], anchor=CENTER)
+            qb_list_box.heading(i, text=col)
+
+        for i, player in enumerate(qb_df.values):
+            qb_list_box.insert("", END, values=("Available",
+            player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+        qb_list_box.grid(row=1, column=0, sticky=NSEW)
+        qb_scrollbar = ttk.Scrollbar(qb_tab, orient=VERTICAL, command=qb_list_box.yview)
+        qb_list_box.configure(yscroll=qb_scrollbar.set)
+        qb_scrollbar.grid(row=1, column=1, sticky='ns')
+
+        # rb tab
+
+        rb_list_box = ttk.Treeview(rb_tab, columns=rb_df.columns.values, show="headings", height=33)
+        for i, col in enumerate(rb_df.columns.values):
+            rb_list_box.column(i, width=width_list[i], anchor=CENTER)
+            rb_list_box.heading(i, text=col)
+
+        for i, player in enumerate(rb_df.values):
+            rb_list_box.insert("", END, values=("Available",
+                player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+        rb_list_box.grid(row=1, column=0, sticky=NSEW)
+        rb_scrollbar = ttk.Scrollbar(rb_tab, orient=VERTICAL, command=rb_list_box.yview)
+        rb_list_box.configure(yscroll=rb_scrollbar.set)
+        rb_scrollbar.grid(row=1, column=1, sticky='ns')
+
+        # wr tab
+
+        wr_list_box = ttk.Treeview(wr_tab, columns=wr_df.columns.values, show="headings", height=33)
+        for i, col in enumerate(wr_df.columns.values):
+            wr_list_box.column(i, width=width_list[i], anchor=CENTER)
+            wr_list_box.heading(i, text=col)
+
+        for i, player in enumerate(wr_df.values):
+            wr_list_box.insert("", END, values=("Available",
+                player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+        wr_list_box.grid(row=1, column=0, sticky=NSEW)
+        wr_scrollbar = ttk.Scrollbar(wr_tab, orient=VERTICAL, command=wr_list_box.yview)
+        wr_list_box.configure(yscroll=wr_scrollbar.set)
+        wr_scrollbar.grid(row=1, column=1, sticky='ns')
+
+        # wr tab
+
+        te_list_box = ttk.Treeview(te_tab, columns=te_df.columns.values, show="headings", height=33)
+        for i, col in enumerate(te_df.columns.values):
+            te_list_box.column(i, width=width_list[i], anchor=CENTER)
+            te_list_box.heading(i, text=col)
+
+        for i, player in enumerate(te_df.values):
+            te_list_box.insert("", END, values=("Available",
+                player[1], player[2], player[3], player[4], player[5], player[6], player[7], player[8]))
+        te_list_box.grid(row=1, column=0, sticky=NSEW)
+        te_scrollbar = ttk.Scrollbar(te_tab, orient=VERTICAL, command=te_list_box.yview)
+        te_list_box.configure(yscroll=te_scrollbar.set)
+        te_scrollbar.grid(row=1, column=1, sticky='ns')
+
+        all_list = self.get_players(all_df)
+        qb_list = self.get_players(qb_df)
+        rb_list = self.get_players(rb_df)
+        wr_list = self.get_players(wr_df)
+        te_list = self.get_players(te_df)
+
+        for player in qb_list.players:
+            self.qbs[player.name] = player
+            self.all[player.name] = player
+        for player in rb_list.players:
+            self.rbs[player.name] = player
+            self.all[player.name] = player
+        for player in wr_list.players:
+            self.wrs[player.name] = player
+            self.all[player.name] = player
+        for player in te_list.players:
+            self.tes[player.name] = player
+            self.all[player.name] = player
+
+    def get_players(self, df):
+        all_players = PlayerList()
+        for i, row in df.iterrows():
+            new_player = Player(row[8], row[7], row[1])
+            all_players.add(new_player)
+        return all_players
+
+    def display_selected(self, event):
+        for selected in self.list_box.selection():
+            player_name = self.list_box.item(selected)['values'][1]
+            if not self.all[player_name].picked:
+                messagebox.showinfo(title='Player selected', message=f"{player_name} marked as selected")
+                self.all[player_name].picked = True
+            else:
+                messagebox.showinfo(title='Player unselected', message=f"{player_name} marked as available")
+                self.all[player_name].picked = False
 
     def update_labels(self):
         self.qb_csv_label.configure(text=self.qb_csv)

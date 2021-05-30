@@ -9,10 +9,10 @@
 		"wr_weight": "5",
 		"te_weight": "2",
 		"randomness": "1",
-		"qb_csv": "",
-		"rb_csv": "",
-		"wr_csv": "",
-		"te_csv": ""
+		"qb_csv": "C:\\Users\\Eric\\PycharmProjects\\AutoDrafter\\src\\fantasyCSVs\\standard_qb.csv",
+		"rb_csv": "C:\\Users\\Eric\\PycharmProjects\\AutoDrafter\\src\\fantasyCSVs\\standard_rb.csv",
+		"wr_csv": "C:\\Users\\Eric\\PycharmProjects\\AutoDrafter\\src\\fantasyCSVs\\standard_wr.csv",
+		"te_csv": "C:\\Users\\Eric\\PycharmProjects\\AutoDrafter\\src\\fantasyCSVs\\standard_te.csv"
 		}
 	]
 }
