@@ -94,6 +94,9 @@ class Window(Frame):
 
         self.te_csv_label = Label(text="")
         self.te_csv_label.place(x=0, y=140)
+
+        run_button = Button(text="Run", command=self.run)
+        run_button.place(x=WINDOW_X // 2, y=WINDOW_Y - 50)
         self.update_labels()
 
     def manage_config(self):
