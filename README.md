@@ -2,15 +2,10 @@
 
 A fantasy football drafter which plans an entire draft given certain parameters. See https://eaanalytics.blogspot.com/2021/01/building-better-auto-drafter-using-gene.html for more information.
 
-Clone this repository ($ git clone https://github.com/eapanthers/AutoDrafter.git), then install the appropriate python packages. Then run python Drafter.py after navigating to the correct directory and answer the following prompts:
-  - The index of the first pick 
-  - The number of rounds in the draft (two will be subtracted to account for kicker and defense picks)
-  - The number of teams in the league
-  - The weight given towards drafting QBs, on a scale of 1 to number of rounds -- this number will correspond approximately to the number that get picked
-  - The weight given towards drafting RBs
-  - The weight given towards drafting WRs
-  - The weight given towards drafting TEs - the sum of these weights should equal the number of rounds - 2. So in a 14 round league, I'd recommend 1, 5, 5, 1 as the weights
-  - (Optional) The amount of variance observed when simulating the draft on a scale of 1-10.
+Open your terminal of choice, clone this repository ($ git clone https://github.com/eapanthers/AutoDrafter.git), and install the appropriate python packages. Then run python Drafter.py after navigating to AutoDrafter/src. It may take a minute to cache for first time use this session. After that, go to File -> Set Config... and choose the configuration file located in the same directory as AutoDrafter, or set your own configuration values. Picks can be either a full list, or if you made no trades just the index of your first pick.
+After setting your config, click Done and go to File -> Set CSVs (unless you set your CSV paths in the config json). Select the sample CSVs in the fantasyCSVs folder in the same directory as AutoDrafter. Once those are all set, you can view the board using the View Board option, or run the simulation.
+
+For common issues, see Troubleshooting.md
  
  Sample datasets containing ADP and player projections from ESPN are included.
  
