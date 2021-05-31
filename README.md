@@ -17,5 +17,4 @@ For common issues, see [Troubleshooting.md](https://github.com/eapanthers/AutoDr
  Running on some instances of macOS will cause some menus not to display. Buttons included in that case.
  
  Future improvements:
-   - Implement a UI
    - Update live during drafts
