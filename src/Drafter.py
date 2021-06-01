@@ -255,8 +255,8 @@ def ff_viterbi(
             if states[i] == "qb":
                 v_table[i][0] = math.log(
                     max(
-                        get_best_available(all_qbs).proj_points
-                        - all_qbs.find_adp(sequence[1])[0].proj_points,
+                        ((get_best_available(all_qbs).proj_points
+                        - all_qbs.find_adp(sequence[1])[0].proj_points) / all_qbs.find_adp(sequence[1])[0].proj_points) * 100,
                         0.01,
                     )
                 )
@@ -266,8 +266,8 @@ def ff_viterbi(
             elif states[i] == "rb":
                 v_table[i][0] = math.log(
                     max(
-                        get_best_available(all_rbs).proj_points
-                        - all_rbs.find_adp(sequence[1])[0].proj_points,
+                        ((get_best_available(all_rbs).proj_points
+                        - all_rbs.find_adp(sequence[1])[0].proj_points) / all_rbs.find_adp(sequence[1])[0].proj_points)*100,
                         0.01,
                     )
                 )
@@ -277,8 +277,8 @@ def ff_viterbi(
             elif states[i] == "wr":
                 v_table[i][0] = math.log(
                     max(
-                        get_best_available(all_wrs).proj_points
-                        - all_wrs.find_adp(sequence[1])[0].proj_points,
+                        ((get_best_available(all_wrs).proj_points
+                        - all_wrs.find_adp(sequence[1])[0].proj_points) / all_wrs.find_adp(sequence[1])[0].proj_points)*100,
                         0.01,
                     )
                 )
@@ -288,15 +288,14 @@ def ff_viterbi(
             elif states[i] == "te":
                 v_table[i][0] = math.log(
                     max(
-                        get_best_available(all_tes).proj_points
-                        - all_tes.find_adp(sequence[1])[0].proj_points,
+                        ((get_best_available(all_tes).proj_points
+                        - all_tes.find_adp(sequence[1])[0].proj_points) / all_tes.find_adp(sequence[1])[0].proj_points)*100,
                         0.01,
                     )
                 )
                 drafted_table[i][0] = [3]
                 best_player = get_best_available(all_tes)
                 drafted_players[i][0] = best_player
-
 
         for i in range(1, len(sequence)):
             picked_players = sim_picks(
@@ -365,8 +364,8 @@ def ff_viterbi(
                             probabilities.append(
                                 v_table[state][i - 1]
                                 + math.log(
-                                    get_best_available(e).proj_points
-                                    - e.find_adp(sequence[i + 1])[0].proj_points
+                                    ((get_best_available(e).proj_points
+                                    - (e.find_adp(sequence[i + 1]-1)[0].proj_points + e.find_adp(sequence[i + 1])[0].proj_points + e.find_adp(sequence[i + 1]+1)[0].proj_points) / 3) / e.find_adp(sequence[i + 1])[0].proj_points) * 100
                                 )
                                 + math.log(transition_table[states[state]][pos])
                             )
