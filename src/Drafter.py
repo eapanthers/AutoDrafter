@@ -297,7 +297,7 @@ def ff_viterbi(
                 best_player = get_best_available(all_tes)
                 drafted_players[i][0] = best_player
 
-        # print(f"Your picks are: {sequence}.")
+
         for i in range(1, len(sequence)):
             picked_players = sim_picks(
                 all_qbs,
