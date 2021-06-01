@@ -18,3 +18,4 @@ For common issues, see [Troubleshooting.md](https://github.com/eapanthers/AutoDr
  
  Future improvements:
    - Update live during drafts
+   - Fill correct values when re-initializing config menu
