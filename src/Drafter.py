@@ -341,22 +341,14 @@ def ff_viterbi(
                 cur_wrs_drafted = 0
                 cur_tes_drafted = 0
                 probabilities = []
-                if i <= len(sequences):
-                    scaled_seq = sequence[i + 1]
-                else:
-                    scaled_seq = sequence[i]
                 if states[pos] == "qb":
                     e = all_qbs
-                    if i <= len(sequences):
-                        scaled_seq = (sequence[i + 1] - sequence[i]) // 2
                 elif states[pos] == "rb":
                     e = all_rbs
                 elif states[pos] == "wr":
                     e = all_wrs
                 elif states[pos] == "te":
                     e = all_tes
-                    if i <= len(sequences):
-                        scaled_seq = (sequence[i + 1] - sequence[i]) // 1.5
                 for drafted in drafted_table[pos][i - 1]:
                     if drafted == 0:
                         cur_qbs_drafted += 1
@@ -400,13 +392,13 @@ def ff_viterbi(
                                         (
                                             get_best_available(e).proj_points
                                             - (
-                                                e.find_adp(scaled_seq - 1)[
+                                                e.find_adp(sequence[i + 1] - 1)[
                                                     0
                                                 ].proj_points
-                                                + e.find_adp(scaled_seq)[
+                                                + e.find_adp(sequence[i + 1])[
                                                     0
                                                 ].proj_points
-                                                + e.find_adp(scaled_seq + 1)[
+                                                + e.find_adp(sequence[i + 1] + 1)[
                                                     0
                                                 ].proj_points
                                             )
