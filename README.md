@@ -17,7 +17,9 @@ For common issues, see [Troubleshooting.md](https://github.com/eapanthers/AutoDr
  
  Running on some instances of macOS will cause some menus not to display. Buttons included in that case.
  
- When adding file paths to the config, replace all '\' with '\\' to avoid loading errors.
+ When adding file paths to the config, replace all `\` with `\\` to avoid loading errors.
+ 
+ As of July 2021, Travis Kelce will be the recommended first round pick for you if you're picking outside of the top 3. This isn't an error - the program is working as intended - its due to his projected points being way higher than any other TEs. If you don't want to have him projected top ~8, manually drop his point projections closer to the other TEs.
  
  ## Future improvements:
    - Update live during drafts
