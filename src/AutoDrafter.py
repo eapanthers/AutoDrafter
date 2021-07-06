@@ -305,10 +305,10 @@ class Window(Frame):
         tab_control.add(te_tab, text="TE List")
         tab_control.pack(expand=1, fill="both")
 
-        qb_df = pd.read_csv(self.qb_csv, delimiter=",")
+        qb_df = pd.read_csv(self.qb_csv, delimiter=";")
         rb_df = pd.read_csv(self.rb_csv, delimiter=";")
         wr_df = pd.read_csv(self.wr_csv, delimiter=";")
-        te_df = pd.read_csv(self.te_csv, delimiter=",")
+        te_df = pd.read_csv(self.te_csv, delimiter=";")
 
         all_df = rb_df
         all_df = all_df.append(qb_df).append(wr_df).append(te_df)

@@ -1,76 +1,76 @@
 ;Name;Team;Bye;Age;Pos;PosRank;Points;ADP
-0;Christian McCaffrey;CAR;13;24;RB;RB1;312.5;1.3
-1;Saquon Barkley;NYG;11;23;RB;RB2;244.8;2.5
-2;Ezekiel Elliott;DAL;10;25;RB;RB3;244.6;3.9
-3;Dalvin Cook;MIN;7;25;RB;RB4;233.2;5.2
-4;Derrick Henry;TEN;4;26;RB;RB5;232.4;5.6
-5;Alvin Kamara;NO;6;25;RB;RB6;221.9;5.7
-6;Clyde Edwards-Helaire;KC;10;21;RB;RB7;219.3;6
-7;Josh Jacobs;LV;6;22;RB;RB8;217.3;8.5
-8;Joe Mixon;CIN;9;24;RB;RB9;223;9.8
-9;Nick Chubb;CLE;9;24;RB;RB10;208.9;10.8
-10;Aaron Jones;GB;5;26;RB;RB11;202.6;12.9
-11;Miles Sanders;PHI;9;23;RB;RB12;205.8;13.1
-12;Austin Ekeler;LAC;6;25;RB;RB13;185.9;15.1
-13;Kenyan Drake;ARI;8;26;RB;RB14;192.6;15.2
-14;James Conner;PIT;4;25;RB;RB15;180.8;20.3
-15;Chris Carson;SEA;6;26;RB;RB16;191.6;22
-16;Todd Gurley II;ATL;10;26;RB;RB17;180.8;26.7
-17;David Johnson;HOU;8;29;RB;RB18;184.3;26.8
-18;Jonathan Taylor;IND;7;21;RB;RB19;167.3;28.4
-19;Melvin Gordon III;DEN;5;27;RB;RB20;174;32.9
-20;Mark Ingram II;BAL;7;31;RB;RB21;150.7;34.6
-21;Raheem Mostert;SF;11;28;RB;RB22;178.6;37.1
-22;Le'Veon Bell;NYJ;10;28;RB;RB23;181.5;38.2
-23;Leonard Fournette;TB;13;25;RB;RB24;165.8;44.1
-24;Cam Akers;LAR;9;21;RB;RB25;153;46.4
-25;Devin Singletary;BUF;11;23;RB;RB26;153.5;47.4
-26;Kareem Hunt;CLE;9;25;RB;RB27;135.2;50.4
-27;David Montgomery;CHI;11;23;RB;RB28;169.3;54.7
-28;D'Andre Swift;DET;5;21;RB;RB29;136.7;60.4
-29;J.K. Dobbins;BAL;7;22;RB;RB30;138.9;62.2
-30;Marlon Mack;IND;7;24;RB;RB31;93.1;68.5
-31;Antonio Gibson;WAS;8;22;RB;RB32;100.8;70
-32;Ronald Jones II;TB;13;23;RB;RB33;97;70.1
-33;Zack Moss;BUF;11;23;RB;RB34;94.1;72.5
-34;Jordan Howard;MIA;9;26;RB;RB35;128.5;73.6
-35;Kerryon Johnson;DET;5;23;RB;RB36;94.5;79.3
-36;Phillip Lindsay;DEN;5;26;RB;RB37;110.4;83.9
-37;Sony Michel;NE;5;25;RB;RB38;115.8;84.5
-38;Latavius Murray;NO;6;30;RB;RB39;120.7;87.7
-39;Matt Breida;MIA;7;25;RB;RB40;141.2;91.1
-40;Tevin Coleman;SF;11;27;RB;RB41;127.4;94.1
-41;Alexander Mattison;MIN;7;22;RB;RB42;81.4;95.8
-42;Chase Edmonds;ARI;8;24;RB;RB43;53.3;104
-43;James White;NE;5;28;RB;RB44;121.3;104.2
-44;Tarik Cohen;CHI;11;25;RB;RB45;100.9;105.5
-45;Ryquell Armstead;JAX;8;24;RB;RB46;111.9;116.6
-46;Tony Pollard;DAL;10;23;RB;RB47;71.4;116.9
-47;Darrell Henderson Jr.;LAR;9;23;RB;RB48;94.8;117.9
-48;A.J. Dillon;GB;5;22;RB;RB49;69.4;122.5
-49;Bryce Love;WAS;8;23;RB;RB50;75;125.2
-50;Boston Scott;PHI;9;25;RB;RB51;91.2;130.1
-51;Chris Thompson;JAX;8;30;RB;RB52;79.2;137.4
-52;Damien Williams;KC;10;28;RB;RB53;10;138.8
-53;Adrian Peterson;DET;5;35;RB;RB54;68.5;140.3
-54;Justin Jackson;LAC;6;24;RB;RB55;104.8;143.4
-55;Darrel Williams;KC;10;25;RB;RB56;76.9;150.7
-56;Carlos Hyde;SEA;6;30;RB;RB57;72.7;152.6
-57;Joshua Kelley;LAC;6;23;RB;RB58;54.7;152.9
-58;Duke Johnson;HOU;8;27;RB;RB59;90.8;155.5
-59;Benny Snell Jr;PIT;4;22;RB;RB60;79.9;156.2
-60;Jerick McKinnon;SF;11;28;RB;RB61;74.9;157.5
-61;Malcolm Brown;LAR;9;27;RB;RB62;55.3;158.7
-62;James Robinson;JAX;8;22;RB;RB63;45.9;162.9
-63;Nyheim Hines;IND;7;24;RB;RB64;83.6;182
-64;Darrynton Evans;TEN;4;22;RB;RB65;81.5;184
-65;Frank Gore;NYJ;10;37;RB;RB66;79.2;187
-66;Jalen Richard;LV;6;27;RB;RB67;76.9;188
-67;Jamaal Williams;GB;5;25;RB;RB68;72.8;192
-68;Rex Burkhead;NE;5;30;RB;RB69;59.4;204
-69;Anthony McFarland Jr;PIT;4;22;RB;RB70;56.2;208
-70;Giovani Bernard;CIN;9;29;RB;RB71;55.9;210
-71;Peyton Barber;WAS;8;26;RB;RB72;54;212
-72;Ito Smith;ATL;10;25;RB;RB73;50.7;216
-73;Lesean McCoy;TB;13;32;RB;RB74;48.4;220
-74;LaMical Perine;NYJ;10;22;RB;RB75;44.7;223
+0;Christian McCaffrey;CAR;13;25;RB;RB1;251.5;1.3
+1;Dalvin Cook;MIN;7;25;RB;RB2;252.1;2.4
+2;Derrick Henry;TEN;13;27;RB;RB3;260.3;2.5
+3;Nick Chubb;CLE;13;25;RB;RB4;226.9;5
+4;Alvin Kamara;NO;6;25;RB;RB5;218.4;5
+5;Saquon Barkley;NYG;10;24;RB;RB6;244.4;5.4
+6;Jonathan Taylor;IND;14;22;RB;RB7;230.3;6.8
+7;Ezekiel Elliott;DAL;7;25;RB;RB8;226.7;7.4
+8;Aaron Jones;GB;13;26;RB;RB9;210.4;9.3
+9;Cam Akers;LAR;11;22;RB;RB10;219.9;12.1
+10;Austin Ekeler;LAC;7;26;RB;RB11;193.5;14.4
+11;Antonio Gibson;WAS;9;23;RB;RB12;205.8;16.3
+12;Josh Jacobs;LV;8;23;RB;RB13;190;18.2
+13;Joe Mixon;CIN;10;24;RB;RB14;194;19.7
+14;J.K. Dobbins;BAL;8;22;RB;RB15;184.1;21.4
+15;Clyde Edwards-Helaire;KC;12;22;RB;RB16;177;26.7
+16;Miles Sanders;PHI;14;24;RB;RB17;200;29.2
+17;Chris Carson;SEA;9;26;RB;RB18;192.3;32
+18;James Robinson;JAX;7;22;RB;RB19;135.1;33.2
+19;David Montgomery;CHI;10;24;RB;RB20;174.2;34.1
+20;D'Andre Swift;DET;9;22;RB;RB21;175.7;34.9
+21;Kareem Hunt;CLE;13;25;RB;RB22;142.5;39.4
+22;Najee Harris;PIT;7;23;RB;RB23;195.5;42.2
+23;Raheem Mostert;SF;6;29;RB;RB24;143.4;43.3
+24;Melvin Gordon III;DEN;11;28;RB;RB25;140;45.9
+25;Myles Gaskin;MIA;14;24;RB;RB26;153.6;48.5
+26;Chase Edmonds;ARI;12;25;RB;RB27;149.2;58.6
+27;Ronald Jones II;TB;9;23;RB;RB28;130.3;61.3
+28;Mike Davis;ATL;6;28;RB;RB29;153.6;64.2
+29;Leonard Fournette;TB;9;26;RB;RB30;134.5;69.3
+30;James Conner;ARI;12;26;RB;RB31;134.8;73.2
+31;Damien Harris;NE;14;24;RB;RB32;130.4;77.4
+32;David Johnson;HOU;10;29;RB;RB33;141;77.7
+33;Travis Etienne Jr.;JAX;7;22;RB;RB34;142.2;84.4
+34;Jeff Wilson Jr.;SF;6;25;RB;RB35;43.5;84.5
+35;Devin Singletary;BUF;7;23;RB;RB36;102.7;85.5
+36;Kenyan Drake;LV;8;27;RB;RB37;120.8;89.3
+37;Javonte Williams;DEN;11;21;RB;RB38;126.2;89.8
+38;A.J. Dillon;GB;13;23;RB;RB39;110.4;90
+39;Zack Moss;BUF;7;23;RB;RB40;107.2;96.1
+40;Gus Edwards;BAL;8;26;RB;RB41;103.6;98.4
+41;Latavius Murray;NO;6;31;RB;RB42;94;104.6
+42;Tony Pollard;DAL;7;24;RB;RB43;84.6;106.1
+43;Phillip Lindsay;HOU;10;26;RB;RB44;81.2;112.7
+44;Nyheim Hines;IND;14;24;RB;RB45;92.9;113.8
+45;Jamaal Williams;DET;9;26;RB;RB46;104;116.7
+46;Mark Ingram II;HOU;10;31;RB;RB47;36.3;118.5
+47;J.D. McKissic;WAS;9;27;RB;RB48;90.4;119.2
+48;Alexander Mattison;MIN;7;23;RB;RB49;94.2;120.2
+49;Damien Williams;CHI;10;29;RB;RB50;38.2;129.3
+50;Rashaad Penny;SEA;9;25;RB;RB51;74;130.7
+51;Michael Carter;NYJ;6;22;RB;RB52;105.9;134
+52;Devontae Booker;NYG;10;29;RB;RB53;44.5;139.6
+53;Sony Michel;NE;14;26;RB;RB54;88.2;140.5
+54;James White;NE;14;29;RB;RB55;87.3;143.8
+55;Trey Sermon;SF;6;22;RB;RB56;80.8;144.7
+56;Rhamondre Stevenson;NE;14;23;RB;RB57;11;146.1
+57;Anthony McFarland Jr.;PIT;7;23;RB;RB58;22.8;149.8
+58;Tevin Coleman;NYJ;6;28;RB;RB59;107.2;151.8
+59;Darrell Henderson Jr;LAR;11;23;RB;RB60;86.3;154
+60;DeeJay Dallas;SEA;9;22;RB;RB61;42.5;155.5
+61;Boston Scott;PHI;14;26;RB;RB62;22;157
+62;Carlos Hyde;JAX;7;30;RB;RB63;22.3;157.8
+63;Giovani Bernard;TB;9;29;RB;RB64;44.4;159.2
+64;Marlon Mack;IND;14;25;RB;RB65;42.7;160.8
+65;Tarik Cohen;CHI;10;25;RB;RB66;87.3;164.8
+66;Kenneth Gainwell;PHI;14;22;RB;RB67;30.6;166.8
+67;Darrel Williams;KC;12;26;RB;RB68;74.8;166.9
+68;Justin Jackson;LAC;7;226;RB;RB69;67.8;167.6
+69;Cordarrelle Patterson;ATL;6;30;RB;RB70;62.9;169
+70;Jerick McKinnon;KC;12;29;RB;RB71;28.4;169.1
+71;Malcolm Brown;MIA;14;28;RB;RB72;49.5;169.7
+72;Joshua Kelley;LAC;7;23;RB;RB73;46;212
+73;Chuba Hubbard;CAR;13;22;RB;RB74;43.7;216
+74;Salvon Ahmed;MIA;14;22;RB;RB75;71.5;224

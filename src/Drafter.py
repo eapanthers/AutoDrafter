@@ -192,15 +192,14 @@ def ff_viterbi(
         ],
     }
 
-    qb_df = pd.read_csv(qb_csv, delimiter=",")
+    qb_df = pd.read_csv(qb_csv, delimiter=";")
     rb_df = pd.read_csv(rb_csv, delimiter=";")
     wr_df = pd.read_csv(wr_csv, delimiter=";")
-    te_df = pd.read_csv(te_csv, delimiter=",")
+    te_df = pd.read_csv(te_csv, delimiter=";")
 
     all_df = rb_df
     all_df = all_df.append(qb_df).append(wr_df).append(te_df)
     sorted_df = all_df.sort_values(by="ADP")
-
     all_rbs = PlayerList()
     for i, row in rb_df.iterrows():
         new_player = Player(row[8], row[7], row[1])
@@ -384,41 +383,32 @@ def ff_viterbi(
                 ]
                 for state in range(len(states)):
                     try:
-                        if i <= len(sequences):
+                        if i < len(sequence) - 1:
+                            cur_player = e.find_adp(sequence[i + 1])
                             probabilities.append(
                                 v_table[state][i - 1]
-                                + math.log(
-                                    (
-                                        (
-                                            get_best_available(e).proj_points
-                                            - (
-                                                e.find_adp(sequence[i + 1] - 1)[
-                                                    0
-                                                ].proj_points
-                                                + e.find_adp(sequence[i + 1])[
-                                                    0
-                                                ].proj_points
-                                                + e.find_adp(sequence[i + 1] + 1)[
-                                                    0
-                                                ].proj_points
-                                            )
-                                            / 3
-                                        )
-                                        / e.find_adp(sequence[i + 1])[0].proj_points
-                                    )
-                                    * 100
+                                + math.log(max(0.00001, get_best_available(e).proj_points
+                                    - max(
+                                        [
+                                            cur_player[0].proj_points,
+                                            e.get(cur_player[1] + 1).proj_points,
+                                            e.get(cur_player[1] + 2).proj_points,
+                                            e.get(cur_player[1] + 3).proj_points,
+                                            e.get(cur_player[1] + 4).proj_points,
+                                            e.get(cur_player[1] + 5).proj_points,
+                                        ]
+                                    ))
                                 )
-                                + math.log(transition_table[states[state]][pos])
+                                + math.log(transition_table[states[state]][pos] + 0.001)
                             )
                         else:
                             probabilities.append(
                                 v_table[state][i - 1]
                                 + math.log(get_best_available(e).proj_points)
-                                + math.log(transition_table[states[state]][pos])
+                                + math.log(transition_table[states[state]][pos] + 0.001)
                             )
-                    except ValueError:
+                    except ValueError as err:
                         probabilities.append(-math.inf)
-
                 v_table[pos][i] = max(probabilities)
                 max_idx = argmax(probabilities)
                 prev_table[pos][i - 1] = max_idx
@@ -432,6 +422,7 @@ def ff_viterbi(
                                 all_qbs.remove(best_player)
                     best_player = get_best_available(all_qbs)
                     drafted_players[pos][i] = best_player
+                    cur_qbs_drafted += 1
                 elif pos == 1:
                     best_player = get_best_available(all_rbs)
                     for player in drafted_players[pos][i]:
@@ -440,6 +431,7 @@ def ff_viterbi(
                                 all_rbs.remove(best_player)
                     best_player = get_best_available(all_rbs)
                     drafted_players[pos][i] = best_player
+                    cur_rbs_drafted += 1
                 elif pos == 2:
                     best_player = get_best_available(all_wrs)
                     for player in drafted_players[pos][i]:
@@ -448,6 +440,7 @@ def ff_viterbi(
                                 all_wrs.remove(best_player)
                     best_player = get_best_available(all_wrs)
                     drafted_players[pos][i] = best_player
+                    cur_wrs_drafted += 1
                 else:
                     best_player = get_best_available(all_tes)
                     for player in drafted_players[pos][i]:
@@ -456,6 +449,7 @@ def ff_viterbi(
                                 all_tes.remove(best_player)
                     best_player = get_best_available(all_tes)
                     drafted_players[pos][i] = best_player
+                    cur_tes_drafted += 1
 
         players = []
         max_values = []
