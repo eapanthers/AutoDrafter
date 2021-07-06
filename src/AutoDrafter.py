@@ -161,6 +161,8 @@ class Window(Frame):
         if len(self.pick_index) > 1:
             picks = [int(pick) for pick in self.pick_index]
         else:
+            if isinstance(self.pick_index, list):
+                self.pick_index = self.pick_index[0]
             picks = Drafter.generate_picks(
                 int(self.pick_index), int(self.num_rounds), int(self.num_teams)
             )
@@ -183,7 +185,7 @@ class Window(Frame):
     def display_results(self, selections, players):
         result_popup = Toplevel(self.master)
         result_popup.title("Draft results")
-        if len(self.pick_index) == 1:
+        if len(self.pick_index) <= 2:
             result_popup.geometry(f"{POPUP_X * 2}x{35*self.num_rounds}")
         else:
             result_popup.geometry(f"{POPUP_X * 2}x{35*len(self.pick_index)}")
