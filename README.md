@@ -14,7 +14,10 @@ For common issues, see [Troubleshooting.md](https://github.com/eapanthers/AutoDr
  
  Known issues:
  On rare occasions player names will appear twice. Simply re-run and the problem should go away. If the issue persists, verify your player weights sum to the number of rounds.
+ 
  Running on some instances of macOS will cause some menus not to display. Buttons included in that case.
+ 
+ When adding file paths to the config, replace all '\' with '\\' to avoid loading errors.
  
  Future improvements:
    - Update live during drafts
