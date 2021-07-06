@@ -44,6 +44,17 @@ class PlayerList:
                 return player, idx
         return None
 
+    def find_next_adp(self, adp: float, num_extra: int) -> Optional[List[Player]]:
+        players = []
+        num_found = 0
+        for idx, player in enumerate(self.players):
+            if player.adp >= adp:
+                num_found += 1
+                players.append(player)
+                if num_found == num_extra:
+                    return players
+        return None
+
     def remove(self, player: Player) -> None:
         remove_idx = None
         remove_player = None

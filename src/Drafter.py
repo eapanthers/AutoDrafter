@@ -384,20 +384,21 @@ def ff_viterbi(
                 for state in range(len(states)):
                     try:
                         if i < len(sequence) - 1:
-                            cur_player = e.find_adp(sequence[i + 1])
                             probabilities.append(
                                 v_table[state][i - 1]
-                                + math.log(max(0.00001, get_best_available(e).proj_points
-                                    - max(
-                                        [
-                                            cur_player[0].proj_points,
-                                            e.get(cur_player[1] + 1).proj_points,
-                                            e.get(cur_player[1] + 2).proj_points,
-                                            e.get(cur_player[1] + 3).proj_points,
-                                            e.get(cur_player[1] + 4).proj_points,
-                                            e.get(cur_player[1] + 5).proj_points,
-                                        ]
-                                    ))
+                                + math.log(
+                                    max(
+                                        0.00001,
+                                        get_best_available(e).proj_points
+                                        - max(
+                                            [
+                                                p.proj_points
+                                                for p in e.find_next_adp(
+                                                    sequence[i + 1], 5
+                                                )
+                                            ]
+                                        ),
+                                    )
                                 )
                                 + math.log(transition_table[states[state]][pos] + 0.001)
                             )
