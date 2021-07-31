@@ -319,7 +319,6 @@ class Window(Frame):
         self.list_box = ttk.Treeview(
             all_tab, columns=sorted_df.columns.values, show="headings", height=33
         )
-        # self.list_box.bind("<Double-1>", self.display_selected)
         width_list = [100, 250, 50, 50, 50, 50, 100, 100, 75]
         sorted_df.columns.values[0] = "Availability"
         qb_df.columns.values[0] = "Availability"
@@ -341,9 +340,6 @@ class Window(Frame):
                     player[3],
                     player[4],
                     player[5],
-                    player[6],
-                    player[7],
-                    player[8],
                 ),
             )
         self.list_box.grid(row=1, column=0, sticky=NSEW)
@@ -371,9 +367,6 @@ class Window(Frame):
                     player[3],
                     player[4],
                     player[5],
-                    player[6],
-                    player[7],
-                    player[8],
                 ),
             )
         qb_list_box.grid(row=1, column=0, sticky=NSEW)
@@ -401,9 +394,6 @@ class Window(Frame):
                     player[3],
                     player[4],
                     player[5],
-                    player[6],
-                    player[7],
-                    player[8],
                 ),
             )
         rb_list_box.grid(row=1, column=0, sticky=NSEW)
@@ -431,9 +421,6 @@ class Window(Frame):
                     player[3],
                     player[4],
                     player[5],
-                    player[6],
-                    player[7],
-                    player[8],
                 ),
             )
         wr_list_box.grid(row=1, column=0, sticky=NSEW)
@@ -461,9 +448,6 @@ class Window(Frame):
                     player[3],
                     player[4],
                     player[5],
-                    player[6],
-                    player[7],
-                    player[8],
                 ),
             )
         te_list_box.grid(row=1, column=0, sticky=NSEW)
@@ -493,7 +477,7 @@ class Window(Frame):
     def get_players(self, df):
         all_players = PlayerList()
         for i, row in df.iterrows():
-            new_player = Player(row[8], row[7], row[1])
+            new_player = Player(row[4], row[3], row[1])
             all_players.add(new_player)
         return all_players
 

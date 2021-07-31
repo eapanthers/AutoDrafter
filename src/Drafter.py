@@ -59,16 +59,16 @@ def sim_picks(
     middle_players = []
     for row in data.iterrows():
         if row[1][1] not in already_picked:
-            if row[1][8] <= cur_pick:  # always set to picked
-                if row[1][5] == "QB":
+            if row[1][4] <= cur_pick:  # always set to picked
+                if row[1][6] == "QB":
                     cur_qb = qb_list.find_player_by_name(row[1][1])[0]
                     cur_qb.picked = True
                     picked_players.append(cur_qb)
-                elif row[1][5] == "RB":
+                elif row[1][6] == "RB":
                     cur_rb = rb_list.find_player_by_name(row[1][1])[0]
                     cur_rb.picked = True
                     picked_players.append(cur_rb)
-                elif row[1][5] == "WR":
+                elif row[1][6] == "WR":
                     cur_wr = wr_list.find_player_by_name(row[1][1])[0]
                     cur_wr.picked = True
                     picked_players.append(cur_wr)
@@ -76,8 +76,8 @@ def sim_picks(
                     cur_te = te_list.find_player_by_name(row[1][1])[0]
                     cur_te.picked = True
                     picked_players.append(cur_te)
-            elif cur_pick < row[1][8] < next_pick + math.sqrt(next_pick):
-                if row[1][5] == "QB":
+            elif cur_pick < row[1][4] < next_pick + math.sqrt(next_pick):
+                if row[1][6] == "QB":
                     cur_qb = qb_list.find_player_by_name(row[1][1])[0]
                     prob_picked = 1 - cur_qb.get_prob_available(
                         cur_pick, next_pick, randomness
@@ -88,7 +88,7 @@ def sim_picks(
                         picked_players.append(cur_qb)
                     else:
                         middle_players.append(cur_qb)
-                elif row[1][5] == "RB":
+                elif row[1][6] == "RB":
                     cur_rb = rb_list.find_player_by_name(row[1][1])[0]
                     prob_picked = 1 - cur_rb.get_prob_available(
                         cur_pick, next_pick, randomness
@@ -99,7 +99,7 @@ def sim_picks(
                         picked_players.append(cur_rb)
                     else:
                         middle_players.append(cur_rb)
-                elif row[1][5] == "WR":
+                elif row[1][6] == "WR":
                     cur_wr = wr_list.find_player_by_name(row[1][1])[0]
                     prob_picked = 1 - cur_wr.get_prob_available(
                         cur_pick, next_pick, randomness
@@ -202,22 +202,22 @@ def ff_viterbi(
     sorted_df = all_df.sort_values(by="ADP")
     all_rbs = PlayerList()
     for i, row in rb_df.iterrows():
-        new_player = Player(row[8], row[7], row[1])
+        new_player = Player(row[4], row[3], row[1])
         all_rbs.add(new_player)
 
     all_qbs = PlayerList()
     for i, row in qb_df.iterrows():
-        new_player = Player(row[8], row[7], row[1])
+        new_player = Player(row[4], row[3], row[1])
         all_qbs.add(new_player)
 
     all_wrs = PlayerList()
     for i, row in wr_df.iterrows():
-        new_player = Player(row[8], row[7], row[1])
+        new_player = Player(row[4], row[3], row[1])
         all_wrs.add(new_player)
 
     all_tes = PlayerList()
     for i, row in te_df.iterrows():
-        new_player = Player(row[8], row[7], row[1])
+        new_player = Player(row[4], row[3], row[1])
         all_tes.add(new_player)
 
     sequences = {"draft1": picks}
