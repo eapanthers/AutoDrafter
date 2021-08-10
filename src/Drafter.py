@@ -414,15 +414,18 @@ def ff_viterbi(
                                 + math.log(
                                     max(
                                         0.00001,
-                                        best_player.proj_points
-                                        - max(
-                                            [
-                                                p.proj_points
-                                                for p in e.find_next_adp(
-                                                    sequence[i + 1], 5
-                                                )
-                                            ]
-                                        ),
+                                        (
+                                            best_player.proj_points
+                                            - max(
+                                                [
+                                                    p.proj_points
+                                                    for p in e.find_next_adp(
+                                                        sequence[i + 1], 5
+                                                    )
+                                                ]
+                                            )
+                                        )
+                                        / (best_player.proj_points / 2),
                                     )
                                 )
                                 + math.log(transition_table[states[state]][pos])
