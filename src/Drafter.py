@@ -425,7 +425,7 @@ def ff_viterbi(
                                                 ]
                                             )
                                         )
-                                        / (best_player.proj_points / 2),
+                                        / best_player.proj_points,
                                     )
                                 )
                                 + math.log(transition_table[states[state]][pos])
