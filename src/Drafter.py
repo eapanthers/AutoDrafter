@@ -358,38 +358,63 @@ def ff_viterbi(
                     else:
                         cur_tes_drafted += 1
                 transition_table["qb"] = [
-                    max(1 - cur_qbs_drafted / num_qbs, 0),
-                    max(1 - cur_qbs_drafted / num_qbs, 0),
-                    max(1 - cur_qbs_drafted / num_qbs, 0),
-                    max(1 - cur_qbs_drafted / num_qbs, 0),
+                    0 if cur_qbs_drafted == num_qbs else 1,
+                    0 if cur_qbs_drafted == num_qbs else 1,
+                    0 if cur_qbs_drafted == num_qbs else 1,
+                    0 if cur_qbs_drafted == num_qbs else 1,
                 ]
                 transition_table["rb"] = [
-                    max(1 - cur_rbs_drafted / num_rbs, 0),
-                    max(1 - cur_rbs_drafted / num_rbs, 0),
-                    max(1 - cur_rbs_drafted / num_rbs, 0),
-                    max(1 - cur_rbs_drafted / num_rbs, 0),
+                    0 if cur_rbs_drafted == num_rbs else 1,
+                    0 if cur_rbs_drafted == num_rbs else 1,
+                    0 if cur_rbs_drafted == num_rbs else 1,
+                    0 if cur_rbs_drafted == num_rbs else 1,
                 ]
                 transition_table["wr"] = [
-                    max(1 - cur_wrs_drafted / num_wrs, 0),
-                    max(1 - cur_wrs_drafted / num_wrs, 0),
-                    max(1 - cur_wrs_drafted / num_wrs, 0),
-                    max(1 - cur_wrs_drafted / num_wrs, 0),
+                    0 if cur_wrs_drafted == num_wrs else 1,
+                    0 if cur_wrs_drafted == num_wrs else 1,
+                    0 if cur_wrs_drafted == num_wrs else 1,
+                    0 if cur_wrs_drafted == num_wrs else 1,
                 ]
                 transition_table["te"] = [
-                    max(1 - cur_tes_drafted / num_tes, 0),
-                    max(1 - cur_tes_drafted / num_tes, 0),
-                    max(1 - cur_tes_drafted / num_tes, 0),
-                    max(1 - cur_tes_drafted / num_tes, 0),
+                    0 if cur_tes_drafted == num_tes else 1,
+                    0 if cur_tes_drafted == num_tes else 1,
+                    0 if cur_tes_drafted == num_tes else 1,
+                    0 if cur_tes_drafted == num_tes else 1,
                 ]
                 for state in range(len(states)):
                     try:
+                        best_player = get_best_available(e)
                         if i < len(sequence) - 1:
+                            if (
+                                max(
+                                    [
+                                        p.proj_points
+                                        for p in e.find_next_adp(sequence[i], 5)
+                                    ]
+                                )
+                                > best_player.proj_points
+                            ):
+                                max_num = argmax(
+                                    [
+                                        p.proj_points
+                                        for p in e.find_next_adp(
+                                            sequence[i], sequence[i + 1] - sequence[i]
+                                        )
+                                    ]
+                                )
+                                player_arr = [
+                                    p
+                                    for p in e.find_next_adp(
+                                        sequence[i], sequence[i + 1] - sequence[i]
+                                    )
+                                ]
+                                best_player = player_arr[max_num[0]]
                             probabilities.append(
                                 v_table[state][i - 1]
                                 + math.log(
                                     max(
                                         0.00001,
-                                        get_best_available(e).proj_points
+                                        best_player.proj_points
                                         - max(
                                             [
                                                 p.proj_points
@@ -400,13 +425,13 @@ def ff_viterbi(
                                         ),
                                     )
                                 )
-                                + math.log(transition_table[states[state]][pos] + 0.001)
+                                + math.log(transition_table[states[state]][pos])
                             )
                         else:
                             probabilities.append(
                                 v_table[state][i - 1]
-                                + math.log(get_best_available(e).proj_points)
-                                + math.log(transition_table[states[state]][pos] + 0.001)
+                                + math.log(best_player.proj_points)
+                                + math.log(transition_table[states[state]][pos])
                             )
                     except ValueError as err:
                         probabilities.append(-math.inf)
@@ -416,39 +441,31 @@ def ff_viterbi(
                 drafted_table[pos][i] = drafted_table[pos][i - 1]
                 drafted_table[pos][i].append(max_idx[0])
                 if pos == 0:
-                    best_player = get_best_available(all_qbs)
                     for player in drafted_players[pos][i]:
                         if player:
                             if player.name == best_player.name:
                                 all_qbs.remove(best_player)
-                    best_player = get_best_available(all_qbs)
                     drafted_players[pos][i] = best_player
                     cur_qbs_drafted += 1
                 elif pos == 1:
-                    best_player = get_best_available(all_rbs)
                     for player in drafted_players[pos][i]:
                         if player:
                             if player.name == best_player.name:
                                 all_rbs.remove(best_player)
-                    best_player = get_best_available(all_rbs)
                     drafted_players[pos][i] = best_player
                     cur_rbs_drafted += 1
                 elif pos == 2:
-                    best_player = get_best_available(all_wrs)
                     for player in drafted_players[pos][i]:
                         if player:
                             if player.name == best_player.name:
                                 all_wrs.remove(best_player)
-                    best_player = get_best_available(all_wrs)
                     drafted_players[pos][i] = best_player
                     cur_wrs_drafted += 1
                 else:
-                    best_player = get_best_available(all_tes)
                     for player in drafted_players[pos][i]:
                         if player:
                             if player.name == best_player.name:
                                 all_tes.remove(best_player)
-                    best_player = get_best_available(all_tes)
                     drafted_players[pos][i] = best_player
                     cur_tes_drafted += 1
 

@@ -111,7 +111,9 @@ class Window(Frame):
             command=self.fetch_config,
         )
         self.config_info_label = Label(self.popup, text="")
-        pick_index_label = Label(self.popup, text="Picks: (Comma separated, or a single number if no trades)")
+        pick_index_label = Label(
+            self.popup, text="Picks: (Comma separated, or a single number if no trades)"
+        )
         round_label = Label(self.popup, text="Number of rounds: ")
         teams_label = Label(self.popup, text="Number of teams: ")
         qbs_label = Label(self.popup, text="Weight for QB selection (recommended: 1) ")
